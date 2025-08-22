@@ -1,0 +1,74 @@
+# GM Motorsports: Driving Style Analytics Tool (Pilot Project)
+
+## Business Need  
+In the high-stakes environment of Formula 1, performance optimization hinges on understanding not just the car, but the driver's interaction with it. While lap time remains the ultimate metric, it is influenced by numerous external factors—car performance, tire compound, track conditions, and traffic.  
+
+## Objective  
+To isolate and understand driver behavior, Cadillac F1 requires a telemetry-driven analytics tool that can cluster drivers by driving style, independent of lap time.  
+
+## Key Research Questions  
+- Is there a driving style that is faster overall?  
+- Which style yields higher average speed?  
+- Can tire wear be correlated to driving style?  
+- How do we control for driver, compound, traffic, and weather?  
+
+## Recommended Deliverables  
+- Clustering algorithm for driving styles  
+- Visual dashboard for style comparison  
+- Anomaly detection module  
+- Tire wear correlation model  
+
+## Advanced Analytics Directions  
+- What makes a lap fast for a given driver?  
+- Detect anomalous laps, including:  
+  - Outlier inputs (e.g., defending against another driver)  
+  - Deviations from typical driving style  
+
+---
+
+## My Contribution: Piloting the Capstone Early  
+This project is typically assigned as a **senior capstone**, but I am **piloting it a semester earlier**. Doing so allows me to:  
+- Build foundational approaches before future teams take it on  
+- Explore innovative solutions with fewer constraints  
+- Establish early connections with GM Motorsports engineers  
+
+---
+
+## Discovery Questions to the GM Motorsports Team  
+To better understand their context, workflows, and expectations, I asked guiding questions such as:  
+
+### Systems & Applications  
+- What platforms and architectures drive motorsport analytics?  
+  - Python microservices  
+  - Kafka pipelines  
+  - React rebuilds (from CoffeeScript)  
+  - Real-time telemetry (`gm-staging.pitrho.com`)  
+
+### Tools & Frameworks  
+- Which are most relied on for analysis and visualization?  
+  - Plotly  
+  - Streamlit  
+  - PowerBI  
+  - Jupyter Notebook  
+
+### Role of AI/ML in Motorsport  
+- How should a motorsports AI/ML scientist think?  
+  - Translate data into racing terminology  
+  - Handle ambiguity  
+  - Prioritize data quality over flashy UIs ("garbage in, garbage out")  
+
+### Beyond Dashboards  
+- What differentiates a meaningful solution?  
+  - Well-defined deliverables  
+  - Tangible racing explanations ("these two drivers are the same because…")  
+  - Timeboxing ideas to avoid rabbit holes  
+  - Innovating even at 70% completion  
+
+### Analysis vs. Visualization  
+- How should I balance the two?  
+  - Emphasis on strong data foundations first  
+  - UI polish is secondary  
+
+### End-of-Project Value  
+- How will results be reviewed and integrated into real F1 decision-making?  
+  - GM Motorsports team open to reviewing results once ready  
