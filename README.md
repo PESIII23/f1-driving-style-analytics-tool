@@ -26,12 +26,6 @@ To isolate and understand driver behavior, Cadillac F1 requires a telemetry-driv
 
 ---
 
-## How This Repo Fits In  
-This repository represents my **practical answer to the discovery questions below**.  
-By combining clustering, anomaly detection, and telemetry-based analysis, the repo demonstrates how those insights translate into an end-to-end solution for understanding and comparing driver styles in Formula 1.  
-
----
-
 ## My Contribution: Piloting the Capstone Early  
 This project is typically assigned as a **senior capstone**, but I am **piloting it a semester earlier**. Doing so allows me to:  
 - Build foundational approaches before future teams take it on  
@@ -77,4 +71,10 @@ To better understand their context, workflows, and expectations, I asked guiding
 
 ### End-of-Project Value  
 - How will results be reviewed and integrated into real F1 decision-making?  
-  - GM Motorsports team open to reviewing results once ready  
+  - GM Motorsports team open to reviewing results once ready
+ 
+---
+
+## How This Repo Fits In  
+This repository represents my **practical answer to the project and discovery questions above**.  
+By combining clustering, anomaly detection, and telemetry-based analysis, I demonstrate how those insights translate into an end-to-end solution for understanding and comparing driver styles in Formula 1.  
