@@ -1,11 +1,5 @@
 # Cadillac F1: Driving Style Analytics Tool
 
-## How This Repo Fits In  
-This repository represents my **practical answer to the discovery questions below**.  
-By combining clustering, anomaly detection, and telemetry-based analysis, the repo demonstrates how those insights translate into an end-to-end solution for understanding and comparing driver styles in Formula 1.  
-
----
-
 ## Business Need  
 In the high-stakes environment of Formula 1, performance optimization hinges on understanding not just the car, but the driver's interaction with it. While lap time remains the ultimate metric, it is influenced by numerous external factors—car performance, tire compound, track conditions, and traffic.  
 
@@ -29,6 +23,12 @@ To isolate and understand driver behavior, Cadillac F1 requires a telemetry-driv
 - Detect anomalous laps, including:  
   - Outlier inputs (e.g., defending against another driver)  
   - Deviations from typical driving style  
+
+---
+
+## How This Repo Fits In  
+This repository represents my **practical answer to the discovery questions below**.  
+By combining clustering, anomaly detection, and telemetry-based analysis, the repo demonstrates how those insights translate into an end-to-end solution for understanding and comparing driver styles in Formula 1.  
 
 ---
 
