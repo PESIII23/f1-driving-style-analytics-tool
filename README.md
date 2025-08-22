@@ -1,4 +1,4 @@
-# GM Motorsports: Driving Style Analytics Tool (Pilot Project)
+# Cadillac F1 Driver Style Analytics (Pilot Project)
 
 ## Business Need  
 In the high-stakes environment of Formula 1, performance optimization hinges on understanding not just the car, but the driver's interaction with it. While lap time remains the ultimate metric, it is influenced by numerous external factors—car performance, tire compound, track conditions, and traffic.  
@@ -72,3 +72,9 @@ To better understand their context, workflows, and expectations, I asked guiding
 ### End-of-Project Value  
 - How will results be reviewed and integrated into real F1 decision-making?  
   - GM Motorsports team open to reviewing results once ready  
+
+---
+
+## How This Repo Fits In  
+This repository represents my **practical answer to the discovery questions above**.  
+By combining clustering, anomaly detection, and telemetry-based analysis, the repo demonstrates how those insights translate into an end-to-end solution for understanding and comparing driver styles in Formula 1.  
