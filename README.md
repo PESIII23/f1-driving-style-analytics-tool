@@ -38,36 +38,28 @@ This project is typically assigned as a **senior capstone**, but I am **piloting
 To better understand their context, workflows, and expectations, I asked guiding questions such as:  
 
 ### Systems & Applications  
-- What platforms and architectures drive motorsport analytics?  
+- What platforms and architectural components drive motorsport analytics?  
   - Python microservices  
   - Kafka pipelines (big data messaging)
   - Modernizing apps using React (from CoffeeScript)  
   - Real-time telemetry (`gm-staging.pitrho.com`)  
 
 ### Tools & Frameworks  
-- Which are most relied on for analysis and visualization?  
-  - Plotly  
-  - Streamlit  
-  - PowerBI  
-  - Jupyter Notebook  
+- Which tools are preferred for analysis and visualization?  
+  - Plotly, Streamlit, PowerBI, Jupyter Notebook
 
 ### Role of AI/ML in Motorsport  
 - How should a motorsports AI/ML scientist think?  
-  - Translate data into racing terminology  
-  - Handle ambiguity  
-  - Prioritize data quality over flashy UIs ("garbage in, garbage out")  
+  - How to translate data into racing terminology?  
+  - Can you handle handle ambiguity well?  
+  - Prioritizing data quality over flashy UIs given time constraints and solo-approach ("garbage in, garbage out")  
 
 ### Beyond Dashboards  
-- What differentiates a meaningful solution?  
-  - Well-defined deliverables  
-  - Tangible racing explanations ("these two drivers are the same because…")  
+- What differentiates a meaningful solution? 
+  - Tangible racing explanations ("these two drivers show similar braking patterns because…")  
   - Timeboxing ideas to avoid rabbit holes  
-  - Innovating even at 70% completion  
-
-### Analysis vs. Visualization  
-- How should I balance the two?  
-  - Emphasis on strong data foundations first  
-  - UI polish is secondary  
+  - Innovating even if at 70% completion
+  - Well-defined deliverables
 
 ### End-of-Project Value  
 - How will results be reviewed and integrated into real F1 decision-making?  
