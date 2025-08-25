@@ -40,8 +40,8 @@ To better understand their context, workflows, and expectations, I asked guiding
 ### Systems & Applications  
 - What platforms and architectures drive motorsport analytics?  
   - Python microservices  
-  - Kafka pipelines  
-  - React rebuilds (from CoffeeScript)  
+  - Kafka pipelines (big data messaging)
+  - Modernizing apps using React (from CoffeeScript)  
   - Real-time telemetry (`gm-staging.pitrho.com`)  
 
 ### Tools & Frameworks  
