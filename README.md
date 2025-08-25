@@ -1,7 +1,7 @@
 # Cadillac F1: Driving Style Analytics Tool
 
 ## Business Need  
-In the high-stakes environment of Formula 1, performance optimization hinges on understanding not just the car, but the driver's interaction with it. While lap time remains the ultimate metric, it is influenced by numerous external factors—car performance, tire compound, track conditions, and traffic.  
+In the high-stakes environment of Formula 1, performance optimization hinges on understanding not only the car, but the driver's interaction with it. While lap time remains the ultimate metric, it is influenced by numerous external factors such as car performance, tire compound, track conditions, traffic, and more.  
 
 ## Objective  
 To isolate and understand driver behavior, Cadillac F1 requires a telemetry-driven analytics tool that can cluster drivers by driving style, independent of lap time.  
