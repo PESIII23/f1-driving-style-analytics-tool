@@ -42,24 +42,21 @@ To better understand their context, workflows, and expectations, I asked guiding
   - Python microservices  
   - Kafka pipelines (big data messaging)
   - Modernizing apps using React (from CoffeeScript)  
-  - Real-time telemetry (`gm-staging.pitrho.com`)  
+  - Real-time telemetry integration (`gm-staging.pitrho.com`)  
 
 ### Tools & Frameworks  
 - Which tools are preferred for analysis and visualization?  
-  - Plotly, Streamlit, PowerBI, Jupyter Notebook
+  - Jupyter Notebook, Plotly, Streamlit, PowerBI  
 
-### Role of AI/ML in Motorsport  
-- How should a motorsports AI/ML scientist think?  
-  - How to translate data into racing terminology?  
-  - Can you handle handle ambiguity well?  
-  - Prioritizing data quality over flashy UIs given time constraints and solo-approach ("garbage in, garbage out")  
+### Key Considerations
+- How should an AI/ML Engineer think?
+  - Prioritize data quality over flashy UI, given time constraints and solo-approach
+  - Timeboxing ideas to avoid rabbit holes
 
 ### Beyond Dashboards  
-- What differentiates a meaningful solution? 
+- What differentiates a meaningful solution?
   - Tangible racing explanations ("these two drivers show similar braking patterns because…")  
-  - Timeboxing ideas to avoid rabbit holes  
-  - Innovating even if at 70% completion
-  - Well-defined deliverables
+  - Innovative even if at 70% completion
 
 ### End-of-Project Value  
 - How will results be reviewed and integrated into real F1 decision-making?  
