@@ -22,15 +22,7 @@ To isolate and understand driver behavior, Cadillac F1 requires a telemetry-driv
 - What makes a lap fast for a given driver?  
 - Detect anomalous laps, including:  
   - Outlier inputs (e.g., defending against another driver)  
-  - Deviations from typical driving style  
-
----
-
-## My Contribution: Piloting the Capstone Early  
-This project is typically assigned as a **senior capstone**, but I am **piloting it a semester earlier**. Doing so allows me to:  
-- Build foundational approaches before future teams take it on  
-- Explore innovative solutions with fewer constraints  
-- Establish early connections with GM Motorsports engineers  
+  - Deviations from typical driving style 
 
 ---
 
@@ -61,6 +53,14 @@ To better understand their context, workflows, and expectations, I asked guiding
 ### End-of-Project Value  
 - How will results be reviewed and integrated into real F1 decision-making?  
   - GM Motorsports team open to reviewing results once ready
+ 
+---
+
+## My Contribution: Piloting the Capstone Early  
+This project is typically assigned as a **senior capstone**, but I am **piloting it a semester earlier**. Doing so allows me to:  
+- Build foundational approaches before future teams take it on  
+- Explore innovative solutions with fewer constraints  
+- Establish early connections with GM Motorsports engineers 
  
 ---
 
