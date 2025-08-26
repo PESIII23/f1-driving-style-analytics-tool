@@ -49,7 +49,7 @@ To better understand their context, workflows, and expectations, I asked guiding
   - Jupyter Notebook, Plotly, Streamlit, PowerBI  
 
 ### Key Considerations
-- How should an AI/ML Engineer think?
+- How would an experienced AI/ML Engineer approach the problem?
   - Prioritize data quality over flashy UI, given time constraints and solo-approach
   - Timeboxing ideas to avoid rabbit holes
 
