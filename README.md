@@ -1,5 +1,7 @@
 # Cadillac F1: Driving Style Analytics Tool
 
+[Guide to My Project](https://docs.google.com/document/d/1BunsD4oBivE5Oaoi5o8yKeI-t56p413B6HScvpEkVn8/edit?usp=sharing)
+
 ## Business Need  
 In the high-stakes environment of Formula 1, performance optimization hinges on understanding not only the car, but the driver's interaction with it. While lap time remains the ultimate metric, it is influenced by numerous external factors such as car performance, tire compound, track conditions, traffic, and more.  
 
