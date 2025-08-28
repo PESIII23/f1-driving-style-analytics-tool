@@ -26,7 +26,7 @@ class F1Constants:
         "Abu Dhabi": "Abu Dhabi",
         "France": "France",
         "Portugal": "Portugal",
-        "Miami": "Miami",
+        "Miami": "Miami",      
     }
 
     SESSIONS = {
@@ -35,20 +35,4 @@ class F1Constants:
         "FP3": "FP3",
         "Q": "Q",
         "R": "R"
-        }
-    
-    # DRIVERS = [
-    #     "HAM", "VER", "LEC", "SAI", "RIC", "NOR", "ALO", "OCO",
-    #     "VET", "STR", "GAS", "TSU", "RUS", "RAI", "BOT", "LAT",
-    #     "MAG", "ZHO", "SCH", "DEV"
-    # ]
-    
-
-    
-    # TELEMETRY_CHANNELS = [
-    #     'Speed', 'Throttle', 'Brake', 'Steering', 'RPM', 'Gear',
-    #     'DRS', 'BrakeTempFL', 'BrakeTempFR', 'BrakeTempRL', 'BrakeTempRR',
-    #     'TyrePressureFL', 'TyrePressureFR', 'TyrePressureRL', 'TyrePressureRR',
-    #     'TyreTempFL', 'TyreTempFR', 'TyreTempRL', 'TyreTempRR',
-    #     'LapDistance', 'SessionTime'
-    # ]
+    }

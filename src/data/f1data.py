@@ -2,6 +2,7 @@
 import fastf1
 
 class F1Session:
+    
     def __init__(self, year: int, gp: str, session: str):
         self.session = fastf1.get_session(year, gp, session)
         self.session.load()
