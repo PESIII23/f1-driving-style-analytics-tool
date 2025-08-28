@@ -1,1 +1,1 @@
-from . import fastf1_client
+from . import f1data
