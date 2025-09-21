@@ -1,1 +1,1 @@
-from . import f1data
+from . import f1_data

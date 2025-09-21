@@ -8,13 +8,16 @@ class F1Session:
         self.session.load(telemetry=True)
     
     def get_laps(self, driver: str=None):
-        return self.session.laps.pick_drivers(driver).sess if driver else self.session.laps
+        return self.session.laps.pick_drivers(driver) if driver else self.session.laps
 
     def get_fastest_lap(self, driver: str):
         return self.session.laps.pick_drivers(driver).pick_fastest()
 
     def get_telemetry(self, lap):
         return lap.get_telemetry()
+    
+    def get_car_data(self, driver: str):
+        return self.session.car_data(driver)
     
     def get_weather_data(self):
         return self.session.weather_data
