@@ -26,7 +26,7 @@ class F1Constants:
         "Abu Dhabi": "Abu Dhabi",
         "France": "France",
         "Portugal": "Portugal",
-        "Miami": "Miami",      
+        "Miami": "Miami"      
     }
 
     SESSIONS = {
@@ -35,4 +35,30 @@ class F1Constants:
         "FP3": "FP3",
         "Q": "Q",
         "R": "R"
+    }
+
+    DRIVERS = {
+        "Max Verstappen": "VER",
+        "Sergio Perez": "PER",
+        "Lewis Hamilton": "HAM",
+        "George Russell": "RUS",
+        "Charles Leclerc": "LEC",
+        "Carlos Sainz": "SAI",
+        "Lando Norris": "NOR",
+        "Oscar Piastri": "PIA",
+        "Daniel Ricciardo": "RIC",
+        "Fernando Alonso": "ALO",
+        "Esteban Ocon": "OCO",
+        "Valtteri Bottas": "BOT",
+        "Guanyu Zhou": "ZHO",
+        "Lance Stroll": "STR",
+        "Sebastian Vettel": "VET",
+        "Yuki Tsunoda": "TSU",
+        "Pierre Gasly": "GAS",
+        "Alexander Albon": "ALB",
+        "Mick Schumacher": "MSC",
+        "Kevin Magnussen": "MAG",
+        "Nico Hulkenberg": "HUL",
+        "Logan Sargeant": "SAR",
+        "Liam Lawson": "LAW"
     }
