@@ -10,7 +10,7 @@ To isolate and understand driver behavior, Cadillac F1 requires a telemetry-driv
 
 ## My Contribution
 - Piloted the senior capstone project **a semester early**.  
-- Built **driver telemetry analytics tool** using Python, Jupyter, Plotly, and Streamlit.  
+- Built **driver telemetry analytics tool** using Python, Jupyter, Matplotlib, and Streamlit.  
 - Implemented **clustering and anomaly detection models** to categorize driving styles and flag outlier laps.  
 - Produced **insights on braking, throttle, and tire wear** patterns.  
 - Laid foundation for future teams to extend analysis and integrate results into F1 workflows.
