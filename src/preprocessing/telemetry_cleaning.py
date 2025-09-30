@@ -6,9 +6,9 @@ def clean_driver_sector_telemetry(df, driver: str):
     - Adds a 'DriverCode' column for identification.
     - Drops unnecessary columns to reduce dataset size.
     - Renames columns for clarity and consistent units.
-    - Converts speed from km/h to mph.
     - Converts timestamps to strings and removes '0 days '
-    - Rounds numerical values to three decimal places
+    - Converts speed from km/h to m/s.
+    - Converts 'BrakesApplied' to integer type.
     Returns the cleaned dataframe.
     """
     df.insert(0, 'DriverCode', driver)
@@ -34,5 +34,7 @@ def clean_driver_sector_telemetry(df, driver: str):
     df['SectorTime (s)'] = df['SectorTime (s)'].astype(str).str.replace('0 days ', '').str[:-3]
 
     df['Speed (m/s)'] = df['Speed (m/s)'] * 0.27777777777
+
+    df['BrakesApplied'] = df['BrakesApplied'].astype(int)
 
     return df
