@@ -15,21 +15,47 @@ def filter_timestamp_range(df, start, end, timestamp_col='SessionTime'):
     """
     return df[(df[timestamp_col] >= start) & (df[timestamp_col] <= end)]
 
-def get_row_count(df):
+def get_eda_summary(df, driver, speed='Speed (m/s)', gear='nGear', throttle='Throttle (%)', brake='BrakesApplied'):
     """
-    Returns the number of rows in the dataframe.
+    Prints basic statistics for primary features in a clean block.
     """
-    return len(df)
+    rows = len(df)
 
-def print_eda_summary(df, column):
-    """
-    Prints mean, median, and standard deviation for the specified column in a clean block.
-    """
-    mean = df[column].mean()
-    median = df[column].median()
-    stdev = df[column].std()
-    print(f"--- EDA Summary for '{column}' ---")
-    print(f"Mean   : {mean:.3f}")
-    print(f"Median : {median:.3f}")
-    print(f"StdDev : {stdev:.3f}")
-    print("-------------------------------")
+    max_speed = df[speed].max()
+    mean_speed = df[speed].mean()
+    median_speed = df[speed].median()
+    stdev_speed = df[speed].std()
+
+    brake_events = ((df["BrakesApplied"] == 1) & (df["BrakesApplied"].shift(fill_value=0) == 0)).sum()
+
+    gear_shifts = ((df["nGear"]) != (df["nGear"].shift() )).sum() - 1
+
+    throttle_events = ((df["Throttle (%)"] > 0) & (df["Throttle (%)"].shift(fill_value=0) == 0.000000)).sum()
+    mean_throttle = df[throttle].mean()
+    stdev_throttle = df[throttle].std()
+
+    print(f"--- EDA Summary for {driver} ---")
+
+    print(f"Row Count: {rows}")
+    print()
+
+    print(f"{speed} -->")
+    print(f"Max   : {max_speed:.6f}")
+    print(f"Mean  : {mean_speed:.6f}")
+    print(f"Median: {median_speed:.6f}")
+    print(f"StdDev: {stdev_speed:.6f}")
+    print()
+
+    print(f"{gear} -->")
+    print(f"Shifts: {gear_shifts}")
+    print()
+
+    print(f"{throttle} -->")
+    print(f"Events: {throttle_events}")
+    print(f"Mean  : {mean_throttle:.6f}")
+    print(f"StdDev: {stdev_throttle:.6f}")
+    print()
+
+    print(f"{brake} -->")
+    print(f"Events: {brake_events}")
+    print()
