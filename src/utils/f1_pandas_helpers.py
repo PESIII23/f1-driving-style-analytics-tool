@@ -15,7 +15,7 @@ def filter_timestamp_range(df, start, end, timestamp_col='SessionTime'):
     """
     return df[(df[timestamp_col] >= start) & (df[timestamp_col] <= end)]
 
-def get_eda_summary(df, driver, speed='Speed (m/s)', gear='nGear', throttle='Throttle (%)', brake='BrakesApplied'):
+def get_driver_eda_summary(df, driver, speed='Speed (m/s)', gear='nGear', throttle='Throttle (%)', brake='BrakesApplied'):
     """
     Prints basic statistics for primary features in a clean block.
     """
