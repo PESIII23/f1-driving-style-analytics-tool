@@ -30,8 +30,8 @@ def clean_driver_sector_telemetry(df, driver: str):
         'Z': 'Z (1/10 m)'
     })
 
-    df['SessionTime (s)'] = df['SessionTime (s)'].astype(str).str.replace('0 days ', '').str[:-3]
-    df['SectorTime (s)'] = df['SectorTime (s)'].astype(str).str.replace('0 days ', '').str[:-3]
+    # df['SessionTime (s)'] = df['SessionTime (s)'].astype(str).str.replace('0 days ', '').str[:-3]
+    # df['SectorTime (s)'] = df['SectorTime (s)'].astype(str).str.replace('0 days ', '').str[:-3]
 
     df['Speed (m/s)'] = df['Speed (m/s)'] * 0.27777777777
 

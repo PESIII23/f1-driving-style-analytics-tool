@@ -15,9 +15,17 @@ def filter_timestamp_range(df, start, end, timestamp_col='SessionTime'):
     """
     return df[(df[timestamp_col] >= start) & (df[timestamp_col] <= end)]
 
-def get_driver_eda_summary(df, driver, speed='Speed (m/s)', gear='nGear', throttle='Throttle (%)', brake='BrakesApplied'):
+def get_driver_eda_summary(df, driver, speed='Speed (m/s)', accel='Acceleration (m/s²)', gear='nGear', throttle='Throttle (%)', brake='BrakesApplied'):
     """
-    Prints basic statistics for primary features in a clean block.
+    Prints basic EDA summary statistics for primary telemetry features of a driver.
+    
+    Parameters:
+    - df: pd.DataFrame containing driver telemetry.
+    - driver: str, driver name or identifier.
+    - speed: str, column name for speed.
+    - gear: str, column name for gear.
+    - throttle: str, column name for throttle.
+    - brake: str, column name for brake.
     """
     rows = len(df)
 
@@ -26,36 +34,41 @@ def get_driver_eda_summary(df, driver, speed='Speed (m/s)', gear='nGear', thrott
     median_speed = df[speed].median()
     stdev_speed = df[speed].std()
 
-    brake_events = ((df["BrakesApplied"] == 1) & (df["BrakesApplied"].shift(fill_value=0) == 0)).sum()
+    max_accel = df[accel].max()
+    mean_accel = df[accel].mean()
+    median_accel = df[accel].median()
+    stdev_accel = df[accel].std()
 
-    gear_shifts = ((df["nGear"]) != (df["nGear"].shift() )).sum() - 1
+    brake_events = ((df[brake] == 1) & (df[brake].shift(fill_value=0) == 0)).sum()
 
-    throttle_events = ((df["Throttle (%)"] > 0) & (df["Throttle (%)"].shift(fill_value=0) == 0.000000)).sum()
+    gear_shifts = (df[gear] != df[gear].shift()).sum() - 1
+
+    throttle_events = ((df[throttle] > 0) & (df[throttle].shift(fill_value=0) == 0)).sum()
     mean_throttle = df[throttle].mean()
     stdev_throttle = df[throttle].std()
 
     print(f"--- EDA Summary for {driver} ---")
-
-    print(f"Row Count: {rows}")
-    print()
+    print(f"Row Count: {rows}\n")
 
     print(f"{speed} -->")
     print(f"Max   : {max_speed:.6f}")
     print(f"Mean  : {mean_speed:.6f}")
     print(f"Median: {median_speed:.6f}")
-    print(f"StdDev: {stdev_speed:.6f}")
-    print()
+    print(f"StdDev: {stdev_speed:.6f}\n")
+
+    print(f"{accel} -->")
+    print(f"Max   : {max_accel:.6f}")
+    print(f"Mean  : {mean_accel:.6f}")
+    print(f"Median: {median_accel:.6f}")
+    print(f"StdDev: {stdev_accel:.6f}\n")
 
     print(f"{gear} -->")
-    print(f"Shifts: {gear_shifts}")
-    print()
+    print(f"Shifts: {gear_shifts}\n")
 
     print(f"{throttle} -->")
     print(f"Events: {throttle_events}")
     print(f"Mean  : {mean_throttle:.6f}")
-    print(f"StdDev: {stdev_throttle:.6f}")
-    print()
+    print(f"StdDev: {stdev_throttle:.6f}\n")
 
     print(f"{brake} -->")
-    print(f"Events: {brake_events}")
-    print()
+    print(f"Events: {brake_events}\n")
