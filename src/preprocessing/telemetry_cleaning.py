@@ -30,11 +30,47 @@ def clean_driver_sector_telemetry(df, driver: str):
         'Z': 'Z (1/10 m)'
     })
 
-    # df['SessionTime (s)'] = df['SessionTime (s)'].astype(str).str.replace('0 days ', '').str[:-3]
-    # df['SectorTime (s)'] = df['SectorTime (s)'].astype(str).str.replace('0 days ', '').str[:-3]
-
-    df['Speed (m/s)'] = df['Speed (m/s)'] * 0.27777777777
+    # conversion of km/h to m/s
+    df['Speed (m/s)'] = df['Speed (m/s)'] * 0.277778
 
     df['BrakesApplied'] = df['BrakesApplied'].astype(int)
 
     return df
+
+def clean_circuit_corner_data(df):
+    """
+    Return circuit data with cleaned column names and removed extras.
+    """
+    df = df.drop([
+        'Letter'
+    ], axis=1)
+
+    df = df.rename(columns={
+        'Number': 'Turn',
+        'X': 'X (1/10 m)', 
+        'Y': 'Y (1/10 m)',
+        'Angle': 'Angle (°)',
+        'Distance': 'Distance (1/10 m)'
+    })
+
+    cols = df.columns.tolist()
+    cols.remove('Turn')
+    cols.insert(0, 'Turn')
+    df = df[cols]
+
+    return df
+
+def filter_corner_telemetry(telemetry_df, circuit_df, turn: int, radius: int):
+   """
+   Return filtered telemetry points on or within a circular radius of a given turn.
+   """
+   turn_data = circuit_df.loc[circuit_df['Turn'] == turn]
+   turn_x_pos = turn_data['X (1/10 m)'].iloc[0]
+   turn_y_pos = turn_data['Y (1/10 m)'].iloc[0]
+
+   # equation of circle in Cartesian coordinates
+   corner_telemetry = telemetry_df[
+       ((telemetry_df['X (1/10 m)'] - turn_x_pos)**2 + 
+        (telemetry_df['Y (1/10 m)'] - turn_y_pos)**2) <= radius**2]
+   
+   return corner_telemetry
