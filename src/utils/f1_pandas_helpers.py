@@ -15,7 +15,7 @@ def filter_timestamp_range(df, start, end, timestamp_col='SessionTime'):
     """
     return df[(df[timestamp_col] >= start) & (df[timestamp_col] <= end)]
 
-def get_driver_eda_summary(df, driver, speed='Speed (m/s)', accel='Acceleration (m/s²)', jerk='Jerk (m/s³)', g_force='G-force (g)', gear='nGear', throttle='Throttle (%)', brake='BrakesApplied'):
+def get_driver_eda_summary(df, driver, turn, speed='Speed (m/s)', accel='Acceleration (m/s²)', jerk='Jerk (m/s³)', g_force='G-force (g)', gear='nGear', throttle='Throttle (%)', brake='BrakesApplied'):
     """
     Prints basic EDA summary statistics for primary telemetry features of a driver.
     
@@ -60,7 +60,7 @@ def get_driver_eda_summary(df, driver, speed='Speed (m/s)', accel='Acceleration 
     mean_throttle = df[throttle].mean()
     stdev_throttle = df[throttle].std()
 
-    print(f"--- EDA Summary for {driver} ---")
+    print(f"--- EDA Summary for {driver} at Turn {turn} ---")
     print(f"Row Count: {rows}\n")
 
     print(f"{speed} -->")
