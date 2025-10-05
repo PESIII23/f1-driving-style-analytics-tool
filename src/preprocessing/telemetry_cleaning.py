@@ -6,7 +6,6 @@ def clean_driver_sector_telemetry(df, driver: str):
     - Adds a 'DriverCode' column for identification.
     - Drops unnecessary columns to reduce dataset size.
     - Renames columns for clarity and consistent units.
-    - Converts timestamps to strings and removes '0 days '
     - Converts speed from km/h to m/s.
     - Converts 'BrakesApplied' to integer type.
     Returns the cleaned dataframe.
@@ -63,6 +62,12 @@ def clean_circuit_corner_data(df):
 def filter_corner_telemetry(telemetry_df, circuit_df, turn: int, radius: int):
    """
    Return filtered telemetry points on or within a circular radius of a given turn.
+
+   Parameters:
+   - telmetry_df: pd.Dataframe containing driver telemetry for given session
+   - circuit_df: pd.Dataframe containing circuit data
+   - turn: int, number of turn on circuit
+   - radius: int, 
    """
    turn_data = circuit_df.loc[circuit_df['Turn'] == turn]
    turn_x_pos = turn_data['X (1/10 m)'].iloc[0]

@@ -2,7 +2,7 @@ import pandas as pd
 
 class TelemetryFeatures:
     def __init__(self, df):
-        self.df = df.copy()
+        self.df = df
 
     def acceleration(self, speed='Speed (m/s)', sector_time='SectorTime (s)'):
         """
@@ -33,6 +33,7 @@ class TelemetryFeatures:
 
         self.df[accel] = pd.to_numeric(self.df[accel], errors='coerce')
         self.df[sector_time] = pd.to_timedelta(self.df[sector_time], errors='coerce')
+
         self.df['Jerk (m/s³)'] = (self.df[accel].shift(-1) - self.df[accel])/(self.df[sector_time].shift(-1) - self.df[sector_time]).dt.total_seconds()
         self.df.loc[self.df.index[-1], 'Jerk (m/s³)'] = self.df['Jerk (m/s³)'].iloc[-3:].mean()
 
@@ -44,9 +45,18 @@ class TelemetryFeatures:
 
         return self
     
+    def g_force(self, accel='Acceleration (m/s²)', jerk='Jerk (m/s³)'):
+        """
+        Converts acceleration to g-force.
+        """
+
+        g_force = self.df[accel] / 9.80665
+        jerk_index = self.df.columns.get_loc(jerk)
+        self.df.insert(jerk_index + 1, 'G-force (g)', g_force)
+
+        return self
+    
     def get_features_df(self):
         return self.df
-    
-    # def get_turn_data_points(df, driver: str):
     
     # def find_steering_wheel_angle(df, driver: str):

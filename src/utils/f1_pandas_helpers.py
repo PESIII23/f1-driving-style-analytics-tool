@@ -15,17 +15,20 @@ def filter_timestamp_range(df, start, end, timestamp_col='SessionTime'):
     """
     return df[(df[timestamp_col] >= start) & (df[timestamp_col] <= end)]
 
-def get_driver_eda_summary(df, driver, speed='Speed (m/s)', accel='Acceleration (m/s²)', gear='nGear', throttle='Throttle (%)', brake='BrakesApplied'):
+def get_driver_eda_summary(df, driver, speed='Speed (m/s)', accel='Acceleration (m/s²)', jerk='Jerk (m/s³)', g_force='G-force (g)', gear='nGear', throttle='Throttle (%)', brake='BrakesApplied'):
     """
     Prints basic EDA summary statistics for primary telemetry features of a driver.
     
     Parameters:
-    - df: pd.DataFrame containing driver telemetry.
-    - driver: str, driver name or identifier.
-    - speed: str, column name for speed.
-    - gear: str, column name for gear.
-    - throttle: str, column name for throttle.
-    - brake: str, column name for brake.
+    - df (pd.DataFrame): containing driver telemetry.
+    - driver (str): driver name or identifier.
+    - speed (str): column name for speed.
+    - accel (str): column name for acceleration.
+    - jerk (str): column name for jerk.
+    - g_force (str): column name for g-force
+    - gear (str): column name for gear.
+    - throttle (str): column name for throttle.
+    - brake (str): column name for brake.
     """
     rows = len(df)
 
@@ -38,6 +41,16 @@ def get_driver_eda_summary(df, driver, speed='Speed (m/s)', accel='Acceleration 
     mean_accel = df[accel].mean()
     median_accel = df[accel].median()
     stdev_accel = df[accel].std()
+
+    max_jerk = df[jerk].max()
+    mean_jerk = df[jerk].mean()
+    median_jerk = df[jerk].median()
+    stdev_jerk = df[jerk].std()
+
+    max_g_force = df[g_force].max()
+    mean_g_force = df[g_force].mean()
+    median_g_force = df[g_force].median()
+    stdev_g_force = df[g_force].std()
 
     brake_events = ((df[brake] == 1) & (df[brake].shift(fill_value=0) == 0)).sum()
 
@@ -61,6 +74,18 @@ def get_driver_eda_summary(df, driver, speed='Speed (m/s)', accel='Acceleration 
     print(f"Mean  : {mean_accel:.6f}")
     print(f"Median: {median_accel:.6f}")
     print(f"StdDev: {stdev_accel:.6f}\n")
+
+    print(f"{jerk} -->")
+    print(f"Max   : {max_jerk:.6f}")
+    print(f"Mean  : {mean_jerk:.6f}")
+    print(f"Median: {median_jerk:.6f}")
+    print(f"StdDev: {stdev_jerk:.6f}\n")
+
+    print(f"{g_force} -->")
+    print(f"Max   : {max_g_force:.6f}")
+    print(f"Mean  : {mean_g_force:.6f}")
+    print(f"Median: {median_g_force:.6f}")
+    print(f"StdDev: {stdev_g_force:.6f}\n")
 
     print(f"{gear} -->")
     print(f"Shifts: {gear_shifts}\n")
