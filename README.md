@@ -49,8 +49,8 @@ The `notebooks/01_single_race_eda.ipynb` notebook allows you to perform explorat
    session_type = f1_constants.F1Constants.SESSIONS["Q"]
    ```
 
-2. **Identify Drivers:**  
-   The notebook will load all drivers who participated in the selected session. You may need to research which drivers were present for your chosen year, grand prix, and session type.
+2. **Identify Drivers:**
+    You may need to update driver variable names and ensure they match each driver's code block for consistency and accurate data representation. This helps avoid errors and ensures the analysis is performed on the correct telemetry data for each driver.
 
 3. **Select a Turn and Radius:**  
    Choose a turn number (`turn`) and a radius (`radius`) to focus your analysis. The radius determines how much telemetry data around the turn's coordinates is included, which is important for visualizing throttle and braking traces.
