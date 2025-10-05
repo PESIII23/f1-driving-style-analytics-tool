@@ -84,4 +84,4 @@ You can easily change the year, grand prix, session type, turn, or radius and re
 
 ## Requirements
 See `requirements.txt` for all dependencies.  
-Python 3.9+ recommended.
+Python 3.13+ recommended.
