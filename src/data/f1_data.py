@@ -20,8 +20,10 @@ class F1Session:
         return self.session.car_data(driver)
     
     def get_weather_data(self):
-        return self.session.weather_data
+        return self.session.weather_data()
     
-    # Delegate directly to session if needed
+    def get_circuit_info(self):
+        return self.session.get_circuit_info()
+    
     def __getattr__(self, name):
         return getattr(self.session, name)
