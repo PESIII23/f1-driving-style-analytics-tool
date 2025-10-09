@@ -17,6 +17,24 @@ def filter_timestamp_range(df, start, end, timestamp_col='SessionTime'):
 
 import pandas as pd
 
+def get_fastest_lap_details(df):
+    """
+    Returns list of sector end timestamps based on the fastest lap time.
+    """
+    df = df.copy()
+
+    fastest_lap_idx = df['LapTime'].idxmin()
+    fastest_lap = df.loc[fastest_lap_idx]
+    previous_lap = df.loc[fastest_lap_idx - 1]
+
+    previous_sector3_end = previous_lap['Sector3SessionTime'] if not previous_lap.empty else None
+    fastest_sector1_end = fastest_lap['Sector1SessionTime']
+    fastest_sector2_end = fastest_lap['Sector2SessionTime']
+    fastest_sector3_end = fastest_lap['Sector3SessionTime']
+
+    sector_timestamps = [previous_sector3_end, fastest_sector1_end, fastest_sector2_end, fastest_sector3_end]
+    return sector_timestamps
+
 def get_driver_eda_summary(df, driver, critical_turn,
                            speed='Speed (m/s)',
                            accel='Acceleration (m/s²)',
