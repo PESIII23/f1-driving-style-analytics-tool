@@ -49,7 +49,7 @@ class TelemetryFeatures:
         """
         Converts acceleration to g-force.
         """
-
+        
         g_force = self.df[accel] / 9.80665
         jerk_index = self.df.columns.get_loc(jerk)
         self.df.insert(jerk_index + 1, 'G-force (g)', g_force)
@@ -57,6 +57,9 @@ class TelemetryFeatures:
         return self
     
     def get_features_df(self):
+        """
+        Returns new dataframe with invoked features appended
+        """
         return self.df
     
     # def find_steering_wheel_angle(df, driver: str):
