@@ -1,8 +1,7 @@
 import matplotlib.pyplot as plt
 import pandas as pd
-import numpy as np
 
-def plot_overlap_multi_axis_telemetry(df, driver, turn, time_col='SectorTime (s)', telemetry_cols=[]):
+def plot_overlap_multi_axis_telemetry(df, driver, time_col='SectorTime (s)', telemetry_cols=[]):
     """
     Dynamically generates a multi-axis plot for multiple telemetry columns over a shared time axis.
     """
@@ -41,6 +40,6 @@ def plot_overlap_multi_axis_telemetry(df, driver, turn, time_col='SectorTime (s)
     unique = dict(zip(labels, lines))
     axes[0].legend(unique.values(), unique.keys(), loc='center left', fontsize=12)
 
-    plt.title("{} Turn {} - Telemetry Overlay".format(driver, turn), fontsize=14)
+    plt.title("{} - Telemetry Overlay".format(driver), fontsize=14)
     plt.tight_layout()
     plt.show()
