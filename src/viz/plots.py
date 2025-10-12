@@ -1,33 +1,46 @@
 import matplotlib.pyplot as plt
-import seaborn as sns
 import pandas as pd
-from sklearn.preprocessing import MinMaxScaler
+import numpy as np
 
-def plot_centered_telemetry(df, time_col, telemetry_col, title):
-    df_centered = df.copy()
-    df_centered[telemetry_col] = pd.to_numeric(df_centered[telemetry_col], errors='coerce')
-    df_centered = df_centered.dropna(subset=[telemetry_col])
-    
-    df_centered[telemetry_col] -= df_centered[telemetry_col].mean()
-    
-    plt.figure(figsize=(14, 7))
-    plt.plot(df_centered[time_col], df_centered[telemetry_col], label=f"Centered {telemetry_col}", linewidth=2)
-    plt.title(title)
-    plt.xlabel(time_col)
-    plt.ylabel(f"Centered {telemetry_col}")
-    plt.legend()
-    plt.grid(True)
-    plt.show()
-
-def plot_bar_chart(df, numeric_col, category_col, ylabel: str, title=None):
+def plot_overlap_multi_axis_telemetry(df, driver, turn, time_col='SectorTime (s)', telemetry_cols=[]):
     """
-    Plots a bar chart showing the mean of a numeric column grouped by a categorical column.
+    Dynamically generates a multi-axis plot for multiple telemetry columns over a shared time axis.
     """
+    df = df.copy()
+    df[time_col] = pd.to_timedelta(df[time_col].astype(str), errors='coerce').dt.total_seconds()
+    df[time_col] -= df[time_col].iloc[0]
+    df = df.set_index(time_col, drop=True)
 
-    plt.figure(figsize=(10, 6))
-    sns.barplot(data=df, x=category_col, y=numeric_col, hue=category_col, dodge=False)
-    plt.title(title if title else f"Mean {numeric_col} by {category_col}")
-    plt.xlabel(category_col)
-    plt.ylabel(ylabel)
+    colors = ['blue', 'red', 'green', 'orange', 'purple', 'pink', 'brown', 'gray', 'olive', 'cyan']
+
+    fig, ax = plt.subplots(figsize=(18, 10))
+    fig.subplots_adjust(right=0.75)
+
+    axes = [ax]
+    ax.set_xlabel('SectorTime (s)')
+
+    ax.plot(df.index, df[telemetry_cols[0]], color=colors[0], label=telemetry_cols[0])
+    ax.set_ylabel(telemetry_cols[0], color=colors[0])
+    ax.tick_params(axis='y', colors=colors[0])
+    ax.grid(True)
+
+    for i, col in enumerate(telemetry_cols[1:], start=1):
+        ax_new = axes[0].twinx()
+        ax_new.spines['right'].set_position(('axes', 1 + 0.1 * (i - 1)))
+        ax_new.plot(df.index, df[col], color=colors[i], label=col)
+        ax_new.set_ylabel(col, color=colors[i])
+        ax_new.tick_params(axis='y', colors=colors[i])
+        axes.append(ax_new)
+
+    lines, labels = [], []
+    for a in axes:
+        line, label = a.get_legend_handles_labels()
+        lines += line
+        labels += label
+
+    unique = dict(zip(labels, lines))
+    axes[0].legend(unique.values(), unique.keys(), loc='center left', fontsize=12)
+
+    plt.title("{} Turn {} - Telemetry Overlay".format(driver, turn), fontsize=14)
     plt.tight_layout()
     plt.show()
