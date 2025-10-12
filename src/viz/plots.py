@@ -10,13 +10,16 @@ def plot_overlap_multi_axis_telemetry(df, driver, time_col='SectorTime (s)', tel
     df[time_col] -= df[time_col].iloc[0]
     df = df.set_index(time_col, drop=True)
 
-    colors = ['blue', 'red', 'green', 'orange', 'purple', 'pink', 'brown', 'gray', 'olive', 'cyan']
+    colors = ['orange', 'red', 'blue', 'green', 'purple', 'pink', 'brown', 'gray', 'olive', 'cyan']
 
     fig, ax = plt.subplots(figsize=(18, 10))
-    fig.subplots_adjust(right=0.75)
+    fig.subplots_adjust(right=0.5)
 
     axes = [ax]
-    ax.set_xlabel('SectorTime (s)')
+    ax.set_facecolor('black')
+    fig.patch.set_facecolor('black')
+    ax.set_xlabel('SectorTime (s)', color='white')
+    ax.tick_params(colors='white')  # changes color of ticks and tick labels
 
     ax.plot(df.index, df[telemetry_cols[0]], color=colors[0], label=telemetry_cols[0])
     ax.set_ylabel(telemetry_cols[0], color=colors[0])
@@ -38,8 +41,8 @@ def plot_overlap_multi_axis_telemetry(df, driver, time_col='SectorTime (s)', tel
         labels += label
 
     unique = dict(zip(labels, lines))
-    axes[0].legend(unique.values(), unique.keys(), loc='center left', fontsize=12)
+    axes[0].legend(unique.values(), unique.keys(), loc='center left', fontsize=15)
 
-    plt.title("{} - Telemetry Overlay".format(driver), fontsize=14)
+    plt.title("{} - Telemetry Overlay".format(driver), fontsize=15, color='white')
     plt.tight_layout()
     plt.show()
