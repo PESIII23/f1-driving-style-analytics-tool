@@ -71,4 +71,5 @@ class F1Constants:
         'nGear': 'nGear',
         'Throttle (%)': 'Throttle (%)',
         'BrakesApplied': 'BrakesApplied',
+        'RPM': 'RPM',
     }
