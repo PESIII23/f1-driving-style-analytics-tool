@@ -10,7 +10,8 @@ def plot_overlap_multi_axis_telemetry(df, driver, time_col='SectorTime (s)', tel
     df[time_col] -= df[time_col].iloc[0]
     df = df.set_index(time_col, drop=True)
 
-    colors = ['orange', 'red', 'blue', 'green', 'purple', 'pink', 'brown', 'gray', 'olive', 'cyan']
+    colors = ['orange', 'red', 'blue', 'green', 'purple', 'pink', 'brown', 'gray', 'olive', 'cyan', 'magenta', 
+              'yellow', 'lime', 'teal', 'navy', 'maroon', 'gold', 'silver', 'coral', 'turquoise', 'violet']
 
     fig, ax = plt.subplots(figsize=(18, 10))
     fig.subplots_adjust(right=0.5)
