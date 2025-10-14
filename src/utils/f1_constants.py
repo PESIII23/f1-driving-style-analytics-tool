@@ -62,3 +62,14 @@ class F1Constants:
         "Logan Sargeant": "SAR",
         "Liam Lawson": "LAW"
     }
+
+    TELEMETRY_COLUMNS = {
+        'Speed (m/s)': 'Speed (m/s)',
+        'Acceleration (m/s²)': 'Acceleration (m/s²)',
+        'Jerk (m/s³)': 'Jerk (m/s³)',
+        'G-force (g)': 'G-force (g)',
+        'nGear': 'nGear',
+        'Throttle (%)': 'Throttle (%)',
+        'BrakesApplied': 'BrakesApplied',
+        'RPM': 'RPM',
+    }
