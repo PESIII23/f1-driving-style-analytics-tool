@@ -19,7 +19,7 @@ To isolate and understand driver behavior, Cadillac F1 requires a telemetry-driv
 
 1. **Clone the repository:**
     ```sh
-    git clone https://github.com/yourusername/GMMS_DSAT_FastF1.git
+    git clone https://github.com/<yourusername>/GMMS_DSAT_FastF1.git
     cd GMMS_DSAT_FastF1
     ```
 
@@ -32,14 +32,14 @@ To isolate and understand driver behavior, Cadillac F1 requires a telemetry-driv
     ```sh
     jupyter notebook
     ```
-    Open `notebooks/01_single_race_eda.ipynb` and run the cells to explore the data.
+    Open `notebooks/01_single_driver_eda.ipynb` and run the cells to explore the data.
 
 4. **(Optional) VS Code:**  
    Open the folder in Visual Studio Code and use the built-in Jupyter support for interactive development.
 
-## How to Use the Single Race EDA Notebook
+## How to Use the Single Driver EDA Notebook
 
-The `notebooks/01_single_race_eda.ipynb` notebook allows you to perform exploratory data analysis on telemetry from a single F1 race session. Follow these steps:
+The `notebooks/01_single_driver_eda.ipynb` notebook allows you to perform exploratory data analysis on telemetry from a single F1 race session. Follow these steps:
 
 1. **Select Race Parameters:**  
    At the top of the notebook, set the `year`, `grand_prix`, and `session_type` variables to choose which race and session you want to analyze. For example:
@@ -53,12 +53,12 @@ The `notebooks/01_single_race_eda.ipynb` notebook allows you to perform explorat
     You may need to update driver variable names and ensure they match each driver's code block for consistency and accurate data representation. This helps avoid errors and ensures the analysis is performed on the correct telemetry data for each driver.
 
 3. **Select a Turn and Radius:**  
-   Choose a turn number (`turn`) and a radius (`radius`) to focus your analysis. The radius determines how much telemetry data around the turn's coordinates is included, which is important for visualizing throttle and braking traces.
+   Choose a turn number (`critical_turn`) and a radius (`radius`) to focus your analysis. The radius determines how much telemetry data around the turn's coordinates is included, which is important for visualizing throttle and braking traces.
 
    Example:
    ```python
-   turn = 16
-   radius = 1500  # meters
+   critical_turn = 16
+   radius = 2500
    ```
 
 4. **Run the Analysis:**  
