@@ -10,6 +10,9 @@ def plot_single_driver_telemetry(df, driver, time_col='SectorTime (s)', telemetr
     df[time_col] -= df[time_col].iloc[0]
     df = df.set_index(time_col, drop=True)
 
+    colors = ['red', 'blue', 'green', 'orange', 'purple', 'pink', 'brown', 'gray', 'olive', 'cyan', 'magenta', 
+              'yellow', 'lime', 'teal', 'navy', 'maroon', 'gold', 'silver', 'coral', 'turquoise', 'violet']
+
     fig, ax = plt.subplots(figsize=(18, 10))
     fig.subplots_adjust(right=0.5)
 
@@ -27,7 +30,7 @@ def plot_single_driver_telemetry(df, driver, time_col='SectorTime (s)', telemetr
     for i, col in enumerate(telemetry_cols[1:], start=1):
         ax_new = axes[0].twinx()
         ax_new.spines['right'].set_position(('axes', 1 + 0.1 * (i - 1)))
-        ax_new.plot(df.index, df[col], color=colors[i], label=col)
+        ax_new.plot(df.index, df[col], color=colors[i], label=col, linewidth=2.5)
         ax_new.set_ylabel(col, color=colors[i])
         ax_new.tick_params(axis='y', colors=colors[i])
         axes.append(ax_new)
@@ -49,7 +52,7 @@ def plot_multiple_drivers_telemetry(dfs, drivers=[], time_col='SectorTime (s)', 
     """
     Dynamically generates a multi-axis plot for multiple drivers' telemetry columns over a shared time axis.
     """
-    colors = ['orange', 'red', 'green', 'blue', 'purple', 'pink', 'brown', 'gray', 'olive', 'cyan', 'magenta', 
+    colors = ['red', 'blue', 'green', 'orange', 'purple', 'pink', 'brown', 'gray', 'olive', 'cyan', 'magenta', 
               'yellow', 'lime', 'teal', 'navy', 'maroon', 'gold', 'silver', 'coral', 'turquoise', 'violet']
 
     fig, ax = plt.subplots(figsize=(42, 10))
@@ -75,7 +78,7 @@ def plot_multiple_drivers_telemetry(dfs, drivers=[], time_col='SectorTime (s)', 
 
         for i, col in enumerate(telemetry_cols):
             color = colors[j % len(colors)]
-            axes[i].plot(df.index, df[col], color=color, label="{} - {}".format(drivers[j], col))
+            axes[i].plot(df.index, df[col], color=color, label="{} - {}".format(drivers[j], col), linewidth=2.0)
             axes[i].set_ylabel(col, color=color)
             axes[i].tick_params(axis='y', colors=color)
 
