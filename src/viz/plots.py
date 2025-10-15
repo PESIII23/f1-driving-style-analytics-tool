@@ -52,8 +52,8 @@ def plot_multiple_drivers_telemetry(dfs, drivers=[], time_col='SectorTime (s)', 
     """
     Dynamically generates a multi-axis plot for multiple drivers' telemetry columns over a shared time axis.
     """
-    colors = ['red', 'blue', 'green', 'orange', 'purple', 'pink', 'brown', 'gray', 'olive', 'cyan', 'magenta', 
-              'yellow', 'lime', 'teal', 'navy', 'maroon', 'gold', 'silver', 'coral', 'turquoise', 'violet']
+    colors = ['red', 'yellow', 'green', 'orange', 'blue', 'pink', 'brown', 'gray', 'olive', 'cyan', 'magenta', 
+              'purple', 'lime', 'teal', 'navy', 'maroon', 'gold', 'silver', 'coral', 'turquoise', 'violet']
 
     fig, ax = plt.subplots(figsize=(42, 10))
     fig.subplots_adjust(right=0.5)
