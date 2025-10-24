@@ -89,5 +89,5 @@ def plot_multiple_drivers_telemetry(dfs, drivers=[], time_col='SectorTime (s)', 
         labels += label
 
     unique = dict(zip(labels, lines))
-    axes[0].legend(unique.values(), unique.keys(), loc='center left', fontsize=10)
+    axes[0].legend(unique.values(), unique.keys(), loc='lower right', fontsize=10)
     plt.show()

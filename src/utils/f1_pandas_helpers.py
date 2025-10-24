@@ -35,7 +35,7 @@ def get_fastest_lap_details(df):
     sector_timestamps = [previous_sector3_end, fastest_sector1_end, fastest_sector2_end, fastest_sector3_end]
     return sector_timestamps
 
-def get_driver_eda_summary(df, driver, critical_turn,
+def get_driver_eda_summary(df, driver, critical_turn, initial_max_brake,
                            speed='Speed (m/s)',
                            accel='Acceleration (m/s²)',
                            jerk='Jerk (m/s³)',
@@ -52,33 +52,34 @@ def get_driver_eda_summary(df, driver, critical_turn,
         'Driver': driver,
         'Turn': critical_turn,
         'Row Count': rows,
-        'Max Speed': df[speed].max(),
-        'Mean Speed': df[speed].mean(),
-        'Median Speed': df[speed].median(),
-        'SD Speed': df[speed].std(),
-        'Max Accel': df[accel].max(),
-        'Mean Accel': df[accel].mean(),
-        'Median Accel': df[accel].median(),
-        'SD Accel': df[accel].std(),
-        'Max Jerk': df[jerk].max(),
-        'Mean Jerk': df[jerk].mean(),
-        'Median Jerk': df[jerk].median(),
-        'SD Jerk': df[jerk].std(),
+        'Initial Brake': initial_max_brake,
+        # 'Max Speed': df[speed].max(),
+        # 'Mean Speed': df[speed].mean(),
+        # 'Median Speed': df[speed].median(),
+        # 'SD Speed': df[speed].std(),
+        # 'Max Accel': df[accel].max(),
+        # 'Mean Accel': df[accel].mean(),
+        # 'Median Accel': df[accel].median(),
+        # 'SD Accel': df[accel].std(),
+        # 'Max Jerk': df[jerk].max(),
+        # 'Mean Jerk': df[jerk].mean(),
+        # 'Median Jerk': df[jerk].median(),
+        # 'SD Jerk': df[jerk].std(),
         'Max Gs': df[g_force].max(),
-        'Mean Gs': df[g_force].mean(),
-        'Median Gs': df[g_force].median(),
-        'SD Gs': df[g_force].std(),
+        # 'Mean Gs': df[g_force].mean(),
+        # 'Median Gs': df[g_force].median(),
+        # 'SD Gs': df[g_force].std(),
         'Gear Shifts': (df[gear] != df[gear].shift()).sum() - 1,
         'Throttle Events': ((df[throttle] > 0) & (df[throttle].shift(fill_value=0) == 0)).sum(),
-        'Mean Throttle': df[throttle].mean(),
-        'SD Throttle': df[throttle].std(),
+        # 'Mean Throttle': df[throttle].mean(),
+        # 'SD Throttle': df[throttle].std(),
         'Brake Events': ((df[brake] == 1) & (df[brake].shift(fill_value=0) == 0)).sum()
     }
 
     return pd.DataFrame([summary])
 
 
-def get_driver_eda_multiple_turns(driver, turn_dfs):
+def get_driver_eda_multiple_turns(driver, turn_dfs, initial_max_brake):
     """
     Returns a concatenated dataframe of EDA summaries for multiple turns.
     
@@ -91,7 +92,7 @@ def get_driver_eda_multiple_turns(driver, turn_dfs):
     for turn, turn_df in turn_dfs:
         if len(turn_df) == 0:
             continue
-        summary_df = get_driver_eda_summary(turn_df, driver, turn)
+        summary_df = get_driver_eda_summary(turn_df, driver, turn, initial_max_brake)
         summaries.append(summary_df)
 
     if summaries:
