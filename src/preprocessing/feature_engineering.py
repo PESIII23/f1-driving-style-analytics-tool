@@ -56,17 +56,12 @@ class TelemetryFeatures:
 
         return self
     
-    def convert_sector_time_to_seconds(self, time_col='SectorTime (s)'):
-        """
-        Normalize sector time so the first timestamp starts at 0 seconds.
-        """
-        self.df = self.df.copy()
-
-        if not pd.api.types.is_numeric_dtype(self.df[time_col]):
-            self.df[time_col] = (pd.to_timedelta(self.df[time_col].astype(str), errors='coerce').dt.total_seconds())
-
-        self.df[time_col] = self.df[time_col] - self.df[time_col].iloc[0]
-
+    def convert_sector_time_to_seconds(self, time_col='SectorTime (s)'): 
+        """ Returns dataframe with sector time converted to total seconds """ 
+        self.df = self.df.copy() 
+        self.df[time_col] = pd.to_timedelta(self.df[time_col].astype(str), errors='coerce').dt.total_seconds() 
+        self.df[time_col] -= self.df[time_col].iloc[0] 
+        
         return self
 
 
