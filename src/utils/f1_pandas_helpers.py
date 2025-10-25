@@ -35,7 +35,7 @@ def get_fastest_lap_details(df):
     sector_timestamps = [previous_sector3_end, fastest_sector1_end, fastest_sector2_end, fastest_sector3_end]
     return sector_timestamps
 
-def get_driver_eda_summary(df, driver, critical_turn, initial_max_brake,
+def get_driver_eda_summary(df, driver, critical_turn, initial_max_brake, max_brake_duration, max_throttle_duration,
                            speed='Speed (m/s)',
                            accel='Acceleration (m/s²)',
                            jerk='Jerk (m/s³)',
@@ -53,6 +53,8 @@ def get_driver_eda_summary(df, driver, critical_turn, initial_max_brake,
         'Turn': critical_turn,
         'Row Count': rows,
         'Initial Brake': initial_max_brake,
+        'Brake Duration': max_brake_duration,
+        'Throttle Ramp Time': max_throttle_duration,
         # 'Max Speed': df[speed].max(),
         # 'Mean Speed': df[speed].mean(),
         # 'Median Speed': df[speed].median(),
@@ -79,7 +81,7 @@ def get_driver_eda_summary(df, driver, critical_turn, initial_max_brake,
     return pd.DataFrame([summary])
 
 
-def get_driver_eda_multiple_turns(driver, turn_dfs, initial_max_brake):
+def get_driver_eda_multiple_turns(driver, turn_dfs, initial_max_brake, max_brake_duration, max_throttle_duration):
     """
     Returns a concatenated dataframe of EDA summaries for multiple turns.
     
@@ -92,7 +94,7 @@ def get_driver_eda_multiple_turns(driver, turn_dfs, initial_max_brake):
     for turn, turn_df in turn_dfs:
         if len(turn_df) == 0:
             continue
-        summary_df = get_driver_eda_summary(turn_df, driver, turn, initial_max_brake)
+        summary_df = get_driver_eda_summary(turn_df, driver, turn, initial_max_brake, max_brake_duration, max_throttle_duration)
         summaries.append(summary_df)
 
     if summaries:
