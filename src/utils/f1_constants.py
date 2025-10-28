@@ -72,4 +72,5 @@ class F1Constants:
         'Throttle (%)': 'Throttle (%)',
         'BrakesApplied': 'BrakesApplied',
         'RPM': 'RPM',
+        'Steering Wheel Angle (°)': 'Steering Wheel Angle (°)'
     }
