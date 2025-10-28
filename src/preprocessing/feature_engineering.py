@@ -11,7 +11,7 @@ class TelemetryFeatures:
         immediately after the speed column, and sets the final row to the average of 
         the previous three acceleration values to produce a realistic ending.
         """
-
+        self.df = self.df.copy()
         self.df[speed] = pd.to_numeric(self.df[speed], errors='coerce')
         self.df[sector_time] = pd.to_timedelta(self.df[sector_time], errors='coerce')
         self.df['Acceleration (m/s²)'] = (self.df[speed].shift(-1) - self.df[speed])/(self.df[sector_time].shift(-1) - self.df[sector_time]).dt.total_seconds()
@@ -32,6 +32,7 @@ class TelemetryFeatures:
         the previous three jerk values to produce a realistic ending.
         """
 
+        self.df = self.df.copy()
         self.df[accel] = pd.to_numeric(self.df[accel], errors='coerce')
         self.df[sector_time] = pd.to_timedelta(self.df[sector_time], errors='coerce')
 
@@ -50,21 +51,22 @@ class TelemetryFeatures:
         """
         Converts acceleration to g-force.
         """
-        
+        self.df = self.df.copy()
         g_force = abs(self.df[accel] / 9.80665)
         jerk_index = self.df.columns.get_loc(jerk)
         self.df.insert(jerk_index + 1, 'G-force (g)', g_force)
 
         return self
     
-    def convert_sector_time_to_seconds(self, time_col='SectorTime (s)'): 
+    def convert_sector_time_to_seconds(self, time_col='SectorTime (s)'):
         """
-        Returns dataframe with sector time converted to total seconds
-        """ 
-        self.df = self.df.copy() 
-        self.df[time_col] = pd.to_timedelta(self.df[time_col].astype(str), errors='coerce').dt.total_seconds() 
-        self.df[time_col] -= self.df[time_col].iloc[0]
-        
+        Returns dataframe with sector time converted to total seconds (float)
+        """
+        self.df = self.df.copy()
+        # Only convert to timedelta if not already numeric
+        if not pd.api.types.is_numeric_dtype(self.df[time_col]):
+            self.df[time_col] = pd.to_timedelta(self.df[time_col].astype(str), errors='coerce').dt.total_seconds()
+        self.df[time_col] = self.df[time_col] - self.df[time_col].iloc[0]
         return self
 
     def steering_wheel_angle(self, 
@@ -101,7 +103,7 @@ class TelemetryFeatures:
         front_wheel_angle = np.arctan((wheelbase * yaw_rate) / self.df[speed_col])
 
         # Steering wheel angle in degrees
-        self.df['Steering Wheel Angle (°)'] = np.degrees(front_wheel_angle * steering_ratio)
+        self.df['Steering Wheel Angle (°)'] = -np.degrees(front_wheel_angle * steering_ratio)
         self.df['Steering Wheel Angle (°)'] = self.df['Steering Wheel Angle (°)'].fillna(0)
 
         return self
