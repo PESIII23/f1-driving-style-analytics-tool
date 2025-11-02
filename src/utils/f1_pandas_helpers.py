@@ -35,7 +35,8 @@ def get_fastest_lap_details(df):
     sector_timestamps = [previous_sector3_end, fastest_sector1_end, fastest_sector2_end, fastest_sector3_end]
     return sector_timestamps
 
-def get_driver_eda_summary(df, driver, critical_turn, initial_max_brake, max_brake_duration, throttle_ramp_initial, throttle_ramp_time,
+def get_driver_eda_summary(df, driver, critical_turn, initial_max_brake, max_brake_duration, throttle_ramp_initial, 
+                           throttle_ramp_time, speed_ramp_final, exit_speed_max, speed_minimum, exit_accel_duration,
                            speed='Speed (m/s)',
                            accel='Acceleration (m/s²)',
                            jerk='Jerk (m/s³)',
@@ -52,10 +53,14 @@ def get_driver_eda_summary(df, driver, critical_turn, initial_max_brake, max_bra
         'Driver': driver,
         'Turn': critical_turn,
         'Row Count': rows,
-        'Initial Brake': initial_max_brake,
+        'Brake Initial': initial_max_brake,
         'Brake Duration': max_brake_duration,
         'Throttle Ramp Initial': throttle_ramp_initial,
         'Throttle Ramp Time': throttle_ramp_time,
+        'Speed Ramp Final': speed_ramp_final,
+        'Exit Speed Max': exit_speed_max,
+        'Speed Minimum': speed_minimum,
+        'Exit Accel Duration': exit_accel_duration,
         # 'Max Speed': df[speed].max(),
         # 'Mean Speed': df[speed].mean(),
         # 'Median Speed': df[speed].median(),
@@ -69,7 +74,7 @@ def get_driver_eda_summary(df, driver, critical_turn, initial_max_brake, max_bra
         # 'Median Jerk': df[jerk].median(),
         # 'SD Jerk': df[jerk].std(),
         'Max Gs': df[g_force].max(),
-        # 'Mean Gs': df[g_force].mean(),
+        'Mean Gs': df[g_force].mean(),
         # 'Median Gs': df[g_force].median(),
         # 'SD Gs': df[g_force].std(),
         'Gear Shifts': (df[gear] != df[gear].shift()).sum() - 1,
@@ -82,7 +87,8 @@ def get_driver_eda_summary(df, driver, critical_turn, initial_max_brake, max_bra
     return pd.DataFrame([summary])
 
 
-def get_driver_eda_multiple_turns(driver, turn_dfs, initial_max_brake, max_brake_duration, throttle_ramp_initial, throttle_ramp_time):
+def get_driver_eda_multiple_turns(driver, turn_dfs, initial_max_brake, max_brake_duration, throttle_ramp_initial, 
+                                  throttle_ramp_time, speed_ramp_final, exit_speed_max, speed_minimum, exit_accel_duration):
     """
     Returns a concatenated dataframe of EDA summaries for multiple turns.
     
@@ -95,7 +101,8 @@ def get_driver_eda_multiple_turns(driver, turn_dfs, initial_max_brake, max_brake
     for turn, turn_df in turn_dfs:
         if len(turn_df) == 0:
             continue
-        summary_df = get_driver_eda_summary(turn_df, driver, turn, initial_max_brake, max_brake_duration, throttle_ramp_initial, throttle_ramp_time)
+        summary_df = get_driver_eda_summary(turn_df, driver, turn, initial_max_brake, max_brake_duration, throttle_ramp_initial, 
+                                            throttle_ramp_time, speed_ramp_final, exit_speed_max, speed_minimum, exit_accel_duration)
         summaries.append(summary_df)
 
     if summaries:
