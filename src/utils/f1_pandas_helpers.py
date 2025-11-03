@@ -37,6 +37,7 @@ def get_fastest_lap_details(df):
 
 def get_driver_eda_summary(df, driver, critical_turn, initial_max_brake, max_brake_duration, throttle_ramp_initial, 
                            throttle_ramp_time, speed_ramp_final, exit_speed_max, speed_minimum, exit_accel_duration,
+                           turn_duration,
                            speed='Speed (m/s)',
                            accel='Acceleration (m/s²)',
                            jerk='Jerk (m/s³)',
@@ -61,6 +62,7 @@ def get_driver_eda_summary(df, driver, critical_turn, initial_max_brake, max_bra
         'Exit Speed Max': exit_speed_max,
         'Speed Minimum': speed_minimum,
         'Exit Accel Duration': exit_accel_duration,
+        'Turn Duration': turn_duration,
         # 'Max Speed': df[speed].max(),
         # 'Mean Speed': df[speed].mean(),
         # 'Median Speed': df[speed].median(),
@@ -88,7 +90,8 @@ def get_driver_eda_summary(df, driver, critical_turn, initial_max_brake, max_bra
 
 
 def get_driver_eda_multiple_turns(driver, turn_dfs, initial_max_brake, max_brake_duration, throttle_ramp_initial, 
-                                  throttle_ramp_time, speed_ramp_final, exit_speed_max, speed_minimum, exit_accel_duration):
+                                  throttle_ramp_time, speed_ramp_final, exit_speed_max, speed_minimum, exit_accel_duration,
+                                  turn_duration):
     """
     Returns a concatenated dataframe of EDA summaries for multiple turns.
     
@@ -102,7 +105,8 @@ def get_driver_eda_multiple_turns(driver, turn_dfs, initial_max_brake, max_brake
         if len(turn_df) == 0:
             continue
         summary_df = get_driver_eda_summary(turn_df, driver, turn, initial_max_brake, max_brake_duration, throttle_ramp_initial, 
-                                            throttle_ramp_time, speed_ramp_final, exit_speed_max, speed_minimum, exit_accel_duration)
+                                            throttle_ramp_time, speed_ramp_final, exit_speed_max, speed_minimum, exit_accel_duration,
+                                            turn_duration)
         summaries.append(summary_df)
 
     if summaries:
