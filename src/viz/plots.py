@@ -51,7 +51,10 @@ def plot_single_driver_telemetry(df, driver, time_col='SectorTime (s)', telemetr
 def plot_multiple_drivers_telemetry(dfs, drivers=[], time_col='SectorTime (s)', telemetry_cols=[]):
     """
     Dynamically generates a multi-axis plot for multiple drivers' telemetry columns over a shared time axis.
+    Assumes that the time_col is already in seconds (numeric).
     """
+    import matplotlib.pyplot as plt
+
     colors = ['red', 'yellow', 'green', 'orange', 'blue', 'pink', 'brown', 'gray', 'olive', 'cyan', 'magenta', 
               'purple', 'lime', 'teal', 'navy', 'maroon', 'gold', 'silver', 'coral', 'turquoise', 'violet']
 
@@ -61,7 +64,7 @@ def plot_multiple_drivers_telemetry(dfs, drivers=[], time_col='SectorTime (s)', 
     axes = [ax]
     ax.set_facecolor('black')
     fig.patch.set_facecolor('black')
-    ax.set_xlabel('SectorTime (s)', color='white')
+    ax.set_xlabel(time_col, color='white')
     ax.tick_params(colors='white')
     ax.grid(True)
 
@@ -72,13 +75,19 @@ def plot_multiple_drivers_telemetry(dfs, drivers=[], time_col='SectorTime (s)', 
 
     for j, df in enumerate(dfs):
         df = df.copy()
-        df[time_col] = pd.to_timedelta(df[time_col].astype(str), errors='coerce').dt.total_seconds()
+        
+        if not pd.api.types.is_numeric_dtype(df[time_col]):
+            raise ValueError(f"{time_col} must be numeric (seconds) before plotting.")
+        
+        df = df.dropna(subset=[time_col])
+        
         df[time_col] -= df[time_col].iloc[0]
+        
         df = df.set_index(time_col, drop=True)
 
         for i, col in enumerate(telemetry_cols):
             color = colors[j % len(colors)]
-            axes[i].plot(df.index, df[col], color=color, label="{} - {}".format(drivers[j], col), linewidth=2.0)
+            axes[i].plot(df.index, df[col], color=color, label=f"{drivers[j]} - {col}", linewidth=2.0)
             axes[i].set_ylabel(col, color=color)
             axes[i].tick_params(axis='y', colors=color)
 
@@ -89,5 +98,6 @@ def plot_multiple_drivers_telemetry(dfs, drivers=[], time_col='SectorTime (s)', 
         labels += label
 
     unique = dict(zip(labels, lines))
-    axes[0].legend(unique.values(), unique.keys(), loc='center left', fontsize=10)
+    axes[0].legend(unique.values(), unique.keys(), loc='lower right', fontsize=10)
     plt.show()
+
