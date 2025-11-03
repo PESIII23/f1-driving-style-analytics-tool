@@ -70,43 +70,38 @@ class TelemetryFeatures:
         return self
 
     def steering_wheel_angle(self, 
-                             x_col='X (1/10 m)', 
-                             y_col='Y (1/10 m)', 
-                             speed_col='Speed (m/s)', 
-                             wheelbase=3.6, 
-                             steering_ratio=15):
-        """
-        Calculates steering wheel angle based on changes in X and Y coordinates.
-        """
+                            x_col='X (1/10 m)', 
+                            y_col='Y (1/10 m)', 
+                            speed_col='Speed (m/s)', 
+                            wheelbase=3.6, 
+                            steering_ratio=15):
 
-        self.df = self.df.copy()
+        df = self.df.copy()
 
-        # Compute differences (in 1/10 m)
-        dx = self.df[x_col].diff()
-        dy = self.df[y_col].diff()
+        # Convert from tenths of meters to meters
+        dx = df[x_col].diff() / 10
+        dy = df[y_col].diff() / 10
 
-        # Heading
+        # Heading angle
         yaw = np.arctan2(dy, dx)
 
-        # Time delta
-        dt = self.df['SectorTime (s)'].diff().replace(0, np.nan)
+        # Time delta (stabilized)
+        dt = df['SectorTime (s)'].diff().clip(lower=1e-4)
 
-        # Yaw rate
-        yaw_np = yaw.to_numpy()
-        dt_np = dt.to_numpy()
+        # Yaw rate (rad/s)
+        yaw_rate = yaw.diff() / dt
+        yaw_rate = yaw_rate.fillna(0)
 
-        yaw_rate = np.zeros_like(yaw_np)
-        yaw_rate[1:] = (yaw_np[1:] - yaw_np[:-1]) / dt_np[1:]
-        yaw_rate[0] = 0
+        # Front wheel angle (rad)
+        front_wheel_angle = np.arctan((wheelbase * yaw_rate) / df[speed_col].clip(lower=0.1))
 
-        # Front wheel angle (using yaw_rate and speed)
-        front_wheel_angle = np.arctan((wheelbase * yaw_rate) / self.df[speed_col])
+        # Steering wheel angle (deg)
+        df['Steering Wheel Angle (°)'] = np.degrees(front_wheel_angle) * steering_ratio
+        df['Steering Wheel Angle (°)'] = df['Steering Wheel Angle (°)'].fillna(0)
 
-        # Steering wheel angle in degrees
-        self.df['Steering Wheel Angle (°)'] = -np.degrees(front_wheel_angle * steering_ratio)
-        self.df['Steering Wheel Angle (°)'] = self.df['Steering Wheel Angle (°)'].fillna(0)
-
+        self.df = df
         return self
+
     
     def get_features_df(self):
         """
