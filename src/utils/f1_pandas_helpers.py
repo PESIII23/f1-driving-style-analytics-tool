@@ -138,7 +138,7 @@ def get_driver_eda_summary(df, driver, critical_turn, feature_df,
     rows = len(df)
 
     summary = {
-        'Driver': driver,
+        # 'Driver': driver,
         # 'Turn': critical_turn,
         # 'RowCount': rows,
         # 'MaxSpeed': df[speed].max(),
