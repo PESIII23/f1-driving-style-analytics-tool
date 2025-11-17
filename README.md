@@ -72,7 +72,7 @@ For questions or contributions, open an issue or pull request on GitHub.
 
 ## My Contribution
 - Piloted the senior capstone project **a semester early**.
-- Built a **driver telemetry analytics tool** using Python, Jupyter, Matplotlib, and Streamlit.
+- Built a **driver telemetry analytics tool** using Python, Jupyter, and Matplotlib.
 - Implemented **clustering and anomaly detection models** to categorize driving styles and flag outlier laps.
 - Produced **insights on braking, throttle, and tire wear** patterns.
 - Laid foundation for future teams to extend analysis and integrate results into F1 workflows.
