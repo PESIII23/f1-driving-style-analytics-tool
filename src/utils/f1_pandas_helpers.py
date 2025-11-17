@@ -1,4 +1,5 @@
 import pandas as pd
+import src.preprocessing.telemetry_cleaning as telemetry_cleaning
 
 def filter_timestamp_range(df, start, end, timestamp_col='SessionTime'):
     """
@@ -15,29 +16,115 @@ def filter_timestamp_range(df, start, end, timestamp_col='SessionTime'):
     """
     return df[(df[timestamp_col] >= start) & (df[timestamp_col] <= end)]
 
-import pandas as pd
-
-def get_fastest_lap_details(df):
+def extract_driver_fastest_and_second_fastest_sector3_telemetry(session, driver, qualifying_sessions, corner_position_cleaned=None, critical_turn=None, radius=None):
     """
-    Returns list of sector end timestamps based on the fastest lap time.
+    Extracts and cleans fastest and second fastest sector 3 telemetry and corner telemetry for a given driver
+    for all provided qualifying sessions (e.g., ['q2', 'q3']).
+    Returns:
+        pd.DataFrame: DataFrame with columns for qualifying session, lap type, and telemetry data.
+    """
+    q1, q2, q3 = session.get_laps(driver).split_qualifying_sessions()
+    session_map = {'q1': q1, 'q2': q2, 'q3': q3}
+    records = []
+
+    for qual in qualifying_sessions:
+        qual_session = session_map.get(qual)
+        if qual_session is None or len(qual_session) == 0:
+            continue
+
+        driver_telemetry = session.get_telemetry(qual_session)
+
+        fastest_details = get_fastest_and_second_fastest_lap_details(qual_session)["fastest_lap"]
+        fastest_sector_2_end = str(fastest_details["sector2_end"])
+        fastest_sector_3_end = str(fastest_details["sector3_end"])
+
+        fastest_sector3_telemetry = filter_timestamp_range(driver_telemetry, start=fastest_sector_2_end, end=fastest_sector_3_end)
+        fastest_sector3_telemetry_cleaned = telemetry_cleaning.clean_driver_sector_telemetry(fastest_sector3_telemetry, driver)
+        fastest_corner_telemetry = telemetry_cleaning.filter_corner_telemetry(fastest_sector3_telemetry_cleaned, corner_position_cleaned, critical_turn[0], radius)
+        records.append({
+            'qualifying_session': qual,
+            'lap_type': 'fastest',
+            'telemetry': fastest_corner_telemetry
+        })
+
+        second_fastest_details = get_fastest_and_second_fastest_lap_details(qual_session)["second_fastest_lap"]
+        if second_fastest_details is not None:
+            second_fastest_sector_2_end = str(second_fastest_details["sector2_end"])
+            second_fastest_sector_3_end = str(second_fastest_details["sector3_end"])
+
+            second_fastest_sector3_telemetry = filter_timestamp_range(driver_telemetry, start=second_fastest_sector_2_end, end=second_fastest_sector_3_end)
+            second_fastest_sector3_telemetry_cleaned = telemetry_cleaning.clean_driver_sector_telemetry(second_fastest_sector3_telemetry, driver)
+            second_fastest_corner_telemetry = telemetry_cleaning.filter_corner_telemetry(second_fastest_sector3_telemetry_cleaned, corner_position_cleaned, critical_turn[0], radius)
+            records.append({
+                'qualifying_session': qual,
+                'lap_type': 'second_fastest',
+                'telemetry': second_fastest_corner_telemetry
+            })
+
+    return pd.DataFrame(records)
+
+def get_fastest_and_second_fastest_lap_details(df):
+    """
+    Returns sector end timestamps for the fastest lap and, if it exists, the second fastest lap,
+    while preserving session order to correctly reference previous lap timestamps.
+    If all remaining laps after the fastest are NaT, only the fastest lap is returned.
+    If there is no valid second fastest lap, returns None for second_fastest_lap.
     """
     df = df.copy()
 
-    fastest_lap_idx = df['LapTime'].idxmin()
-    fastest_lap = df.loc[fastest_lap_idx]
-    previous_lap = df.loc[fastest_lap_idx - 1]
+    fastest_idx = df['LapTime'].idxmin()
+    fastest_lap = df.loc[fastest_idx]
 
-    previous_sector3_end = previous_lap['Sector3SessionTime'] if not previous_lap.empty else None
-    fastest_sector1_end = fastest_lap['Sector1SessionTime']
-    fastest_sector2_end = fastest_lap['Sector2SessionTime']
-    fastest_sector3_end = fastest_lap['Sector3SessionTime']
+    prev_fastest_idx = fastest_idx - 1
+    prev_fastest_lap = df.loc[prev_fastest_idx] if prev_fastest_idx in df.index else None
 
-    sector_timestamps = [previous_sector3_end, fastest_sector1_end, fastest_sector2_end, fastest_sector3_end]
-    return sector_timestamps
+    fastest_previous_sector3_end = (
+        prev_fastest_lap['Sector3SessionTime'] if prev_fastest_lap is not None else None
+    )
 
-def get_driver_eda_summary(df, driver, critical_turn, initial_max_brake, max_brake_duration, throttle_ramp_initial, 
-                           throttle_ramp_time, speed_ramp_final, exit_speed_max, speed_minimum, exit_accel_duration,
-                           turn_duration,
+    fastest_details = {
+        "lap_index": fastest_idx,
+        "previous_sector3_end": fastest_previous_sector3_end,
+        "sector1_end": fastest_lap['Sector1SessionTime'],
+        "sector2_end": fastest_lap['Sector2SessionTime'],
+        "sector3_end": fastest_lap['Sector3SessionTime']
+    }
+
+    df_no_fastest = df.drop(index=fastest_idx)
+
+    # If all remaining laps after the fastest are NaT or there are no laps left, only the fastest lap is returned
+    if df_no_fastest.empty or df_no_fastest['LapTime'].isna().all():
+        return {"fastest_lap": fastest_details, "second_fastest_lap": None}
+
+    # Find second fastest lap
+    valid_laps = df_no_fastest.dropna(subset=['LapTime'])
+    if valid_laps.empty:
+        return {"fastest_lap": fastest_details, "second_fastest_lap": None}
+
+    second_fastest_idx = valid_laps['LapTime'].idxmin()
+    second_fastest_lap = df.loc[second_fastest_idx]
+
+    prev_second_idx = second_fastest_idx - 1
+    prev_second_lap = df.loc[prev_second_idx] if prev_second_idx in df.index else None
+
+    second_previous_sector3_end = (
+        prev_second_lap['Sector3SessionTime'] if prev_second_lap is not None else None
+    )
+
+    second_details = {
+        "lap_index": second_fastest_idx,
+        "previous_sector3_end": second_previous_sector3_end,
+        "sector1_end": second_fastest_lap['Sector1SessionTime'],
+        "sector2_end": second_fastest_lap['Sector2SessionTime'],
+        "sector3_end": second_fastest_lap['Sector3SessionTime']
+    }
+
+    return {
+        "fastest_lap": fastest_details,
+        "second_fastest_lap": second_details
+    }
+
+def get_driver_eda_summary(df, driver, critical_turn, feature_df,
                            speed='Speed (m/s)',
                            accel='Acceleration (m/s²)',
                            jerk='Jerk (m/s³)',
@@ -53,63 +140,31 @@ def get_driver_eda_summary(df, driver, critical_turn, initial_max_brake, max_bra
     summary = {
         'Driver': driver,
         'Turn': critical_turn,
-        'Row Count': rows,
-        'Brake Initial': initial_max_brake,
-        'Brake Duration': max_brake_duration,
-        'Throttle Ramp Initial': throttle_ramp_initial,
-        'Throttle Ramp Time': throttle_ramp_time,
-        'Speed Ramp Final': speed_ramp_final,
-        'Exit Speed Max': exit_speed_max,
-        'Speed Minimum': speed_minimum,
-        'Exit Accel Duration': exit_accel_duration,
-        'Turn Duration': turn_duration,
-        # 'Max Speed': df[speed].max(),
-        # 'Mean Speed': df[speed].mean(),
-        # 'Median Speed': df[speed].median(),
-        # 'SD Speed': df[speed].std(),
-        # 'Max Accel': df[accel].max(),
-        # 'Mean Accel': df[accel].mean(),
-        # 'Median Accel': df[accel].median(),
-        # 'SD Accel': df[accel].std(),
-        # 'Max Jerk': df[jerk].max(),
-        # 'Mean Jerk': df[jerk].mean(),
-        # 'Median Jerk': df[jerk].median(),
-        # 'SD Jerk': df[jerk].std(),
-        'Max Gs': df[g_force].max(),
-        'Mean Gs': df[g_force].mean(),
-        # 'Median Gs': df[g_force].median(),
-        # 'SD Gs': df[g_force].std(),
-        'Gear Shifts': (df[gear] != df[gear].shift()).sum() - 1,
-        'Throttle Events': ((df[throttle] > 0) & (df[throttle].shift(fill_value=0) == 0)).sum(),
-        # 'Mean Throttle': df[throttle].mean(),
-        # 'SD Throttle': df[throttle].std(),
-        'Brake Events': ((df[brake] == 1) & (df[brake].shift(fill_value=0) == 0)).sum()
+        'RowCount': rows,
+        'MaxSpeed': df[speed].max(),
+        'MeanSpeed': df[speed].mean(),
+        'MedianSpeed': df[speed].median(),
+        'SDSpeed': df[speed].std(),
+        'MaxAccel': df[accel].max(),
+        'MeanAccel': df[accel].mean(),
+        'MedianAccel': df[accel].median(),
+        'SDAccel': df[accel].std(),
+        # 'MaxJerk': df[jerk].max(),
+        # 'MeanJerk': df[jerk].mean(),
+        # 'MedianJerk': df[jerk].median(),
+        # 'SDJerk': df[jerk].std(),
+        'MaxGs': df[g_force].max(),
+        'MeanGs': df[g_force].mean(),
+        'MedianGs': df[g_force].median(),
+        'SDGs': df[g_force].std(),
+        'GearShifts': (df[gear] != df[gear].shift()).sum() - 1,
+        'ThrottleEvents': ((df[throttle] > 0) & (df[throttle].shift(fill_value=0) == 0)).sum(),
+        'MeanThrottle': df[throttle].mean(),
+        'SDThrottle': df[throttle].std(),
+        'BrakeEvents': ((df[brake] == 1) & (df[brake].shift(fill_value=0) == 0)).sum()
     }
 
-    return pd.DataFrame([summary])
+    summary_df = pd.DataFrame([summary])
+    combined_df = pd.concat([summary_df, feature_df.reset_index(drop=True)], axis=1)
 
-
-def get_driver_eda_multiple_turns(driver, turn_dfs, initial_max_brake, max_brake_duration, throttle_ramp_initial, 
-                                  throttle_ramp_time, speed_ramp_final, exit_speed_max, speed_minimum, exit_accel_duration,
-                                  turn_duration):
-    """
-    Returns a concatenated dataframe of EDA summaries for multiple turns.
-    
-    Parameters:
-    - driver (str): driver name
-    - turn_dfs (list of tuples): [(turn_number, df_for_turn), ...]
-    """
-    summaries = []
-
-    for turn, turn_df in turn_dfs:
-        if len(turn_df) == 0:
-            continue
-        summary_df = get_driver_eda_summary(turn_df, driver, turn, initial_max_brake, max_brake_duration, throttle_ramp_initial, 
-                                            throttle_ramp_time, speed_ramp_final, exit_speed_max, speed_minimum, exit_accel_duration,
-                                            turn_duration)
-        summaries.append(summary_df)
-
-    if summaries:
-        return pd.concat(summaries, ignore_index=True)
-    else:
-        return pd.DataFrame()
+    return combined_df

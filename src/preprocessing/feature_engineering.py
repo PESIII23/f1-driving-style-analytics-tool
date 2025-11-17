@@ -108,5 +108,39 @@ class TelemetryFeatures:
         Returns new dataframe with invoked features appended
         """
         return self.df
-    
-    # def find_steering_wheel_angle(df, driver: str):
+
+    def extract_sector_features(lap_df):
+        """
+        Given a single lap's Sector 3 telemetry dataframe,
+        return derived braking, throttle, and speed metrics.
+        """
+        brake_engage = (lap_df['BrakesApplied'] == 1) & (lap_df['BrakesApplied'].shift() == 0)
+        initial_brake_ts = lap_df.loc[brake_engage, 'SectorTime (s)'].min()
+        brake_disengage = (lap_df['BrakesApplied'] == 0) & (lap_df['BrakesApplied'].shift() == 1)
+        max_brake_ts = lap_df.loc[brake_disengage, 'SectorTime (s)'].min()
+        brake_duration = max_brake_ts - initial_brake_ts
+
+        throttle_engage = (lap_df['Throttle (%)'] > 0) & (lap_df['Throttle (%)'].shift() == 0)
+        throttle_ramp_initial = lap_df.loc[throttle_engage, 'SectorTime (s)'].min()
+        throttle_max = (lap_df['Throttle (%)'] >= 99) & (lap_df['Throttle (%)'].shift() < 99)
+        throttle_ramp_final = lap_df.loc[throttle_max, 'SectorTime (s)'].min()
+        throttle_ramp_time = throttle_ramp_final - throttle_ramp_initial
+
+        speed_min = lap_df['Speed (m/s)'].min()
+        speed_min_ts = lap_df.loc[lap_df['Speed (m/s)'] == speed_min, 'SectorTime (s)'].values[0]
+        exit_speed = lap_df['Speed (m/s)'].iloc[-1]
+        exit_speed_ts = lap_df['SectorTime (s)'].iloc[-1]
+
+        exit_accel_duration = exit_speed_ts - speed_min_ts
+
+        return {
+            "InitialBrakeTime": initial_brake_ts,
+            "BrakeDuration": brake_duration,
+            # "ThrottleRampInitial": throttle_ramp_initial,
+            # "ThrottleRampFinal": throttle_ramp_final,
+            "ThrottleRampTime": throttle_ramp_time,
+            "SpeedMin": speed_min,
+            "ExitSpeed": exit_speed,
+            "ExitAccelDuration": exit_accel_duration,
+            "TurnDuration": exit_speed_ts
+        }
