@@ -8,7 +8,7 @@ In Formula 1, optimizing performance means understanding both the car and the dr
 ## Features
 - **Telemetry Data Pipeline:** FastF1 API to clean, feature-rich datasets.
 - **Exploratory Data Analysis:** Jupyter notebooks for sector and corner-level insights.
-- **Clustering & Multi-axis Plots:** Categorize driving styles using HDBSCAN.
+- **Clustering & Anomaly Detection:** Categorize driving styles and determine outliers with HDBSCAN.
 - **Visualization:** Matplotlib plots for speed, acceleration, and more.
 - **Extensible Foundation:** Easy to build on for future analytics and F1 workflow integration.
 
