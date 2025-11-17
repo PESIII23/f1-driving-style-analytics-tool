@@ -65,7 +65,6 @@ In Formula 1, optimizing performance means understanding both the car and the dr
 ### Troubleshooting
 - If you encounter import errors, check your working directory and dependencies.
 - For missing data or feature engineering errors, ensure driver variable names and session selections are correct and consistent.
-- See the [Guide to My Project](https://docs.google.com/document/d/1BunsD4oBivE5Oaoi5o8yKeI-t56p413B6HScvpEkVn8/edit?usp=sharing) for workflow tips.
 
 ---
 
