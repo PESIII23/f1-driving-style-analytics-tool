@@ -47,7 +47,6 @@ In Formula 1, optimizing performance means understanding both the car and the dr
 
 ### Data Preparation & Setup
 - Python 3.13+ recommended. See `requirements.txt` for dependencies.
-- FastF1 telemetry data may require API credentials.
 - Keep the workspace structure as provided. Update import paths if you move files.
 
 ### Telemetry Analysis & Feature Engineering
