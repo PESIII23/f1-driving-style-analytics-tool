@@ -122,8 +122,10 @@ class TelemetryFeatures:
 
         throttle_engage = (lap_df['Throttle (%)'] > 0) & (lap_df['Throttle (%)'].shift() == 0)
         throttle_ramp_initial = lap_df.loc[throttle_engage, 'SectorTime (s)'].min()
-        throttle_max = (lap_df['Throttle (%)'] >= 99) & (lap_df['Throttle (%)'].shift() < 99)
-        throttle_ramp_final = lap_df.loc[throttle_max, 'SectorTime (s)'].min()
+        # Filter lap_df to only consider data after the initial throttle engagement
+        throttle_after_engage = lap_df[lap_df['SectorTime (s)'] >= throttle_ramp_initial]
+        throttle_max = (throttle_after_engage['Throttle (%)'] >= 99) & (throttle_after_engage['Throttle (%)'].shift() < 99)
+        throttle_ramp_final = throttle_after_engage.loc[throttle_max, 'SectorTime (s)'].min()
         throttle_ramp_time = throttle_ramp_final - throttle_ramp_initial
 
         speed_min = lap_df['Speed (m/s)'].min()
