@@ -21,6 +21,14 @@ def filter_driver_lap_data(df, safety_car_laps=[]):
 
     df = df[df['IsAccurate'] == True]
 
+    required_sector_cols = [
+    'Sector1SessionTime',
+    'Sector2SessionTime',
+    'Sector3SessionTime'
+    ]
+
+    df = df[~df[required_sector_cols].isna().any(axis=1)]
+
     return df
 
 def get_valid_lap_telemetry(df):
