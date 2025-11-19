@@ -7,9 +7,9 @@ from sklearn.cluster import HDBSCAN as _HDBSCAN
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
 
-pkl_path = 'notebooks/exports/eda_summaries/2024_abuDhabi_sector3_qualifying.pkl'
+pkl_path = 'notebooks/exports/final_features/2025_bahrain_sector2_grandprix.pkl'
 df = pd.read_pickle(pkl_path)
-min_cluster_size = 3
+min_cluster_size = 4
 min_samples = 1
 
 def perform_hdbscan_clustering(df, min_cluster_size, min_samples):
@@ -42,13 +42,13 @@ def perform_hdbscan_clustering(df, min_cluster_size, min_samples):
         'MeanThrottle',
         'SDThrottle',
         'BrakeEvents',
-        'InitialBrakeTime',
-        'BrakeDuration',
+        # 'InitialBrakeTime',
+        # 'BrakeDuration',
         'ThrottleRampTime',
         'SpeedMin',
         'ExitSpeed',
-        # 'ExitAccelDuration',
-        # 'TurnDuration'
+        'ExitAccelDuration',
+        'TurnDuration'
     ])
 
     X = X.fillna(0)
@@ -112,7 +112,7 @@ plot_hdbscan_clustering(
 
 # The resulting DataFrame with cluster labels can be used for further analysis
 os.makedirs('notebooks/exports/clustered_dfs', exist_ok=True)
-export_path = 'notebooks/exports/clustered_dfs/2024_abuDhabi_sector3_qualifying_clustered.pkl'
+export_path = 'notebooks/exports/clustered_dfs/2025_bahrain_sector2_grandprix_hdbscan_clustered.pkl'
 df_clustered.to_pickle(export_path)
 print(f"Clustered dataframe exported to: {export_path}")
 
