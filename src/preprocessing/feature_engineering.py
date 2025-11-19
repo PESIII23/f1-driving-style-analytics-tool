@@ -53,8 +53,9 @@ class TelemetryFeatures:
         """
         self.df = self.df.copy()
         g_force = abs(self.df[accel] / 9.80665)
-        jerk_index = self.df.columns.get_loc(jerk)
-        self.df.insert(jerk_index + 1, 'G-force (g)', g_force)
+        accel_index = self.df.columns.get_loc(accel)
+        # jerk_index = self.df.columns.get_loc(jerk)
+        self.df.insert(accel_index + 1, 'G-force (g)', g_force)
 
         return self
     
@@ -109,7 +110,7 @@ class TelemetryFeatures:
         """
         return self.df
 
-    def extract_sector_features(lap_df):
+    def generate_telemetry_performance_metrics(lap_df):
         """
         Given a single lap's Sector 3 telemetry dataframe,
         return derived braking, throttle, and speed metrics.
