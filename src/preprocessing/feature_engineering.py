@@ -102,7 +102,6 @@ class TelemetryFeatures:
 
         self.df = df
         return self
-
     
     def get_features_df(self):
         """

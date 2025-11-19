@@ -93,8 +93,6 @@ def process_driver_telemetry(session, driver, safety_car_laps, corner_position_c
 
     return final_feature_df, driver_laps_filtered, sector_timestamps_dict
 
-
-
 def get_fastest_lap_corner_telemetry(processed_driver_data, driver_code, corner_position, critical_turn, radius, start, end):
     """
     Extracts corner-isolated telemetry for the fastest lap of a driver.

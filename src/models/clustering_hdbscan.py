@@ -12,8 +12,6 @@ df = pd.read_pickle(pkl_path)
 min_cluster_size = 3
 min_samples = 1
 
-
-
 def perform_hdbscan_clustering(df, min_cluster_size, min_samples):
     """
     Performs HDBSCAN clustering on sector 3 qualifying telemetry features
@@ -62,8 +60,6 @@ def perform_hdbscan_clustering(df, min_cluster_size, min_samples):
     
     return (X_scaled, labels, probabilities, df)
 
-
-
 def plot_hdbscan_clustering(X, labels, probabilities=None, parameters=None, ground_truth=False, ax=None, min_cluster_size=None, min_samples=None):
     """
     Plot HDBSCAN clustering results.
@@ -103,8 +99,6 @@ def plot_hdbscan_clustering(X, labels, probabilities=None, parameters=None, grou
         title += f" | {parameters_str}"
     ax.set_title(title)
     plt.tight_layout()
-
-
 
 # Perform clustering and plot results
 X_scaled, labels, probabilities, df_clustered = perform_hdbscan_clustering(df, min_cluster_size, min_samples)
