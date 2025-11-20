@@ -9,7 +9,7 @@ from sklearn.decomposition import PCA
 
 pkl_path = 'notebooks/exports/final_features/2025_bahrain_sector2_grandprix.pkl'
 df = pd.read_pickle(pkl_path)
-min_cluster_size = 4
+min_cluster_size = 3
 min_samples = 1
 
 def perform_hdbscan_clustering(df, min_cluster_size, min_samples):
