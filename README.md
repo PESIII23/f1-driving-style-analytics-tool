@@ -6,6 +6,24 @@ Machine learning tool that clusters F1 drivers by driving style using telemetry 
 
 Isolates driver behavior from car performance by clustering telemetry patterns. Built with Python, FastF1 API, and HDBSCAN clustering to identify distinct driving styles across 20+ F1 drivers.
 
+## 📋 Data Requirements & Driver Selection
+
+**Important**: Before running analysis, you need to determine which drivers participated in your selected session:
+
+1. **Research Session Participants**: Check F1 official timing or race results for the specific Grand Prix and session
+2. **FastF1 API Queries**: Use the FastF1 API to dynamically query available drivers:
+   ```python
+   import fastf1
+   session = fastf1.get_session(2025, 'Bahrain', 'R')
+   session.load()
+   available_drivers = session.drivers  # Returns list of driver codes
+   print(f"Available drivers: {available_drivers}")
+   ```
+3. **Update Notebook**: Modify the driver constants in the notebook to match actual participants
+4. **Handle Missing Data**: Some drivers may not have complete telemetry data - the tool will skip these automatically
+
+**Note**: The notebook is pre-configured with a full 2025 F1 grid, but you should verify driver participation for your specific session.
+
 ## ✨ Key Features
 
 - **📊 Multi-Driver Analysis**: Process entire F1 grid simultaneously in Jupyter notebook
@@ -125,7 +143,7 @@ python -c "import src.data.f1_data"  # Should not error
 ## 📞 Support
 
 - 📧 Email: [pesmithiii7@gmail.com]
-- 🐛 Issues: [GitHub](https://github.com/PESIII23/f1-driving-style-analytics-tool)
+- 🐛 Repository: [GitHub](https://github.com/PESIII23/f1-driving-style-analytics-tool)
 - 📚 Documentation: [Project Guide](https://docs.google.com/document/d/1BunsD4oBivE5Oaoi5o8yKeI-t56p413B6HScvpEkVn8/edit?usp=sharing)
 
 ---
