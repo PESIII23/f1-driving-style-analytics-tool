@@ -143,7 +143,7 @@ python -c "import src.data.f1_data"  # Should not error
 ## Support
 
 - [pesmithiii7@gmail.com]
-- [GitHub Repo](https://github.com/PESIII23/f1-driving-style-analytics-tool)
+- [Fast-F1 API](https://docs.fastf1.dev/)
 - [Project Guide](https://docs.google.com/document/d/1bUCOeN5bhuaDrrDMexeJ81TFGt67gbFEIRQ7dnIu1b4/edit?usp=sharing)
 
 ---
