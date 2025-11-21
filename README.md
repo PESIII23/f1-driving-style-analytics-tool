@@ -142,7 +142,7 @@ python -c "import src.data.f1_data"  # Should not error
 
 ## Support
 
-- 📧 Email: [pesmithiii7@gmail.com]
+- [pesmithiii7@gmail.com]
 - [GitHub Repo](https://github.com/PESIII23/f1-driving-style-analytics-tool)
 - [Project Guide](https://docs.google.com/document/d/1bUCOeN5bhuaDrrDMexeJ81TFGt67gbFEIRQ7dnIu1b4/edit?usp=sharing)
 
