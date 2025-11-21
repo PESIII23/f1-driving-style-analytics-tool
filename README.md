@@ -140,9 +140,15 @@ python -c "import src.data.f1_data"  # Should not error
 - Too few clusters? Increase `min_samples`
 - Adjust feature selection for your analysis focus
 
+## LinkedIn Posts
+
+- Intro: (https://www.linkedin.com/posts/pesiii_formula1-cadillacf1-gmmotorsport-activity-7365775054317502464-qmsr?utm_source=share&utm_medium=member_desktop&rcm=ACoAACSrLlEBT6k6Sz6gGOY_RdhZlQvZAS9ZPTs)
+- Mid-semester Update (https://www.linkedin.com/posts/pesiii_formula1-cadillacf1-cadillacracing-activity-7384278707022200832-2lHi?utm_source=share&utm_medium=member_desktop&rcm=ACoAACSrLlEBT6k6Sz6gGOY_RdhZlQvZAS9ZPTs)
+- Conclusion: Soon!
+
 ## Support
 
-- pesmithiii7@gmail.com
+- Author: pesmithiii7@gmail.com
 - [Fast-F1 API](https://docs.fastf1.dev/)
 - [Project Guide](https://docs.google.com/document/d/1bUCOeN5bhuaDrrDMexeJ81TFGt67gbFEIRQ7dnIu1b4/edit?usp=sharing)
 
