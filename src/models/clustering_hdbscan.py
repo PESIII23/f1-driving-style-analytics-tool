@@ -7,17 +7,14 @@ from sklearn.cluster import HDBSCAN as _HDBSCAN
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
 
-pkl_path = 'notebooks/exports/eda_summaries/2024_abuDhabi_sector3_qualifying.pkl'
+pkl_path = 'notebooks/exports/final_features/2025_bahrain_sector2_grandprix.pkl'
 df = pd.read_pickle(pkl_path)
-min_cluster_size = 3
-min_samples = 1
-
-
+min_cluster_size = 13
+min_samples = 3
 
 def perform_hdbscan_clustering(df, min_cluster_size, min_samples):
     """
-    Performs HDBSCAN clustering on sector 3 qualifying telemetry features
-    from the 2024 Abu Dhabi Grand Prix and appends cluster labels to the DataFrame.
+    Performs HDBSCAN clustering on telemetry features inserted.
     Returns:
         pd.DataFrame: DataFrame with an additional 'Cluster' column.
     """
@@ -46,23 +43,23 @@ def perform_hdbscan_clustering(df, min_cluster_size, min_samples):
         'BrakeEvents',
         'InitialBrakeTime',
         'BrakeDuration',
-        'ThrottleRampTime',
+        # 'ThrottleRampTime',
         'SpeedMin',
         'ExitSpeed',
         # 'ExitAccelDuration',
-        # 'TurnDuration'
+        'TurnDuration'
     ])
 
-    X = X.fillna(0)
-    X_scaled = StandardScaler().fit_transform(X)
-    clusterer = _HDBSCAN(min_cluster_size, min_samples)
-    labels = clusterer.fit_predict(X_scaled)
-    probabilities = clusterer.probabilities_
-    df['Cluster'] = labels
+    X = X.fillna(0) # Handle missing values
+    scaler = StandardScaler() # scaler instance
+    X_scaled = scaler.fit_transform(X) # normalizes input data fit() + transform()
+    X_features = scaler.get_feature_names_out(X.columns) # original column names
+    clusterer = _HDBSCAN(min_cluster_size, min_samples) # clustering model
+    labels = clusterer.fit_predict(X_scaled) # assign cluster labels to data points
+    probabilities = clusterer.probabilities_ # probability of each point belonging to its assigned cluster
+    df['Cluster'] = labels # add cluster labels to dataframe
     
-    return (X_scaled, labels, probabilities, df)
-
-
+    return (X_scaled, labels, probabilities, df, X_features)
 
 def plot_hdbscan_clustering(X, labels, probabilities=None, parameters=None, ground_truth=False, ax=None, min_cluster_size=None, min_samples=None):
     """
@@ -104,10 +101,8 @@ def plot_hdbscan_clustering(X, labels, probabilities=None, parameters=None, grou
     ax.set_title(title)
     plt.tight_layout()
 
-
-
-# Perform clustering and plot results
-X_scaled, labels, probabilities, df_clustered = perform_hdbscan_clustering(df, min_cluster_size, min_samples)
+# Perform clustering, set PCA components, and plot results
+X_scaled, labels, probabilities, df_clustered, X_features = perform_hdbscan_clustering(df, min_cluster_size, min_samples)
 X_pca = PCA(n_components=2).fit_transform(X_scaled)
 
 plot_hdbscan_clustering(
@@ -118,7 +113,7 @@ plot_hdbscan_clustering(
 
 # The resulting DataFrame with cluster labels can be used for further analysis
 os.makedirs('notebooks/exports/clustered_dfs', exist_ok=True)
-export_path = 'notebooks/exports/clustered_dfs/2024_abuDhabi_sector3_qualifying_clustered.pkl'
+export_path = 'notebooks/exports/clustered_dfs/2025_bahrain_sector2_grandprix_hdbscan_clustered.pkl'
 df_clustered.to_pickle(export_path)
 print(f"Clustered dataframe exported to: {export_path}")
 

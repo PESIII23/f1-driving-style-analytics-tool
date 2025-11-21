@@ -1,87 +1,133 @@
-# Cadillac F1: Driving Style Analytics Tool
+# F1 Driving Style Analytics Tool 🏎️
 
-[Guide to My Project](https://docs.google.com/document/d/1BunsD4oBivE5Oaoi5o8yKeI-t56p413B6HScvpEkVn8/edit?usp=sharing)
+Machine learning tool that clusters F1 drivers by driving style using telemetry data. Analyzes brake timing, throttle patterns, and cornering techniques independent of lap times.
 
-## Business Need
-In Formula 1, optimizing performance means understanding both the car and the driver. Lap time is influenced by car setup, tire compound, track conditions, and more. To isolate driver behavior, Cadillac F1 needs a telemetry-driven analytics tool that clusters drivers by driving style, independent of lap time.
+## 🔍 Overview
 
-## Features
-- **Telemetry Data Pipeline:** FastF1 API to clean, feature-rich datasets.
-- **Exploratory Data Analysis:** Jupyter notebooks for sector and corner-level insights.
-- **Clustering & Anomaly Detection:** Categorize driving styles and determine outliers with HDBSCAN.
-- **Visualization:** Matplotlib plots for speed, acceleration, and more.
-- **Extensible Foundation:** Easy to build on for future analytics and F1 workflow integration.
+Isolates driver behavior from car performance by clustering telemetry patterns. Built with Python, FastF1 API, and HDBSCAN clustering to identify distinct driving styles across 20+ F1 drivers.
 
-## Getting Started
+## ✨ Key Features
 
-1. **Clone the repository:**
-    ```sh
-    git clone https://github.com/<yourusername>/GMMS_DSAT_FastF1.git
-    cd GMMS_DSAT_FastF1
-    ```
-2. **Install dependencies:**
-    ```sh
-    pip install -r requirements.txt
-    ```
-3. **Launch Jupyter Notebook:**
-    ```sh
-    jupyter notebook
-    ```
-    Open `notebooks/01_single_driver_eda.ipynb` or `02_multi_driver_analysis.ipynb` and run the cells to explore the data.
-4. **(Optional) VS Code:**
-   Open the folder in Visual Studio Code and use the built-in Jupyter support for interactive development.
+- **📊 Multi-Driver Analysis**: Process entire F1 grid simultaneously in Jupyter notebook
+- **🤖 ML Clustering**: HDBSCAN identifies driving style patterns and anomalies  
+- **📈 Professional Visualizations**: Dark theme plots optimized for presentations
+- **🔧 Advanced Features**: Brake timing, throttle ramps, G-forces, gear shifts
 
-## How to Use the Notebooks
+## 🚀 Quick Start
 
-- Set `year`, `grand_prix`, and `session_type` at the top of the notebook to select the race and session.
-- Update driver variable names to match code blocks for consistency and accurate analysis.
-- Choose a turn (`critical_turn`) and a radius (`radius`) to focus your analysis. Example:
-    ```python
-    critical_turn = 16
-    radius = 2500
-    ```
-- Run the notebook cells to filter, clean, and analyze telemetry data for each driver. Visualizations and summary statistics will be generated for the selected turn and radius.
-- Change parameters and re-run the notebook to analyze different scenarios or compare across sessions.
+```bash
+git clone https://github.com/PESIII23/f1-driving-style-analytics-tool.git
+cd f1-driving-style-analytics-tool
+python3 -m venv venv && source venv/bin/activate
+pip install -r requirements.txt
+jupyter notebook
+```
 
-## Important Instructions
+Open `notebooks/01_multi_driver_gp_analysis.ipynb` and run all cells for complete analysis.
 
-### Data Preparation & Setup
-- Python 3.13+ recommended. See `requirements.txt` for dependencies.
-- Keep the workspace structure as provided. Update import paths if you move files.
+## 📊 Main Notebook Features
 
-### Telemetry Analysis & Feature Engineering
-- Use provided code blocks to extract, clean, and engineer telemetry features for each driver/session (Q2/Q3).
-- The function `extract_driver_fastest_and_second_fastest_sector3_telemetry` returns a DataFrame with fastest and second fastest laps for each qualifying session. Filter this DataFrame to access telemetry for specific laps and drivers.
-- Feature engineering is performed using `feature_engineering.TelemetryFeatures`. Use `.acceleration().jerk().g_force().convert_sector_time_to_seconds().get_features_df()` to generate feature DataFrames.
+The `01_multi_driver_gp_analysis.ipynb` notebook is the core of this project and provides:
 
-### Clustering & Visualization
-- Use `src/models/clustering_hdbscan.py` for HDBSCAN clustering. Adjust `min_cluster_size` and `min_samples` as needed, and keep them consistent between clustering and plotting.
-- Visualize results using plotting functions in `src/viz/plots.py` and notebook code blocks. Plot speed, throttle, RPM, and other telemetry features for all drivers and laps.
+### 🏎️ Driver Processing Pipeline
+- **20+ F1 Drivers**: Automated telemetry extraction for entire grid
+- **Safety Car Filtering**: Removes distorted laps for clean analysis
+- **Corner-Specific Analysis**: Focus on critical turns (e.g., Turn 10 at Bahrain)
 
-### Exporting & Further Analysis
-- Clustered and EDA summary DataFrames are exported to `notebooks/exports/eda_summaries/` and `notebooks/exports/clustered_dfs/`.
-- Extend analysis by adding new feature engineering, clustering, or visualizations as needed.
+### 📈 Advanced Visualizations
+```python
+# Multi-driver telemetry comparison
+plots.plot_multiple_drivers_telemetry(
+    dfs=all_driver_dataframes,
+    drivers=all_driver_codes,
+    telemetry_cols=[speed, throttle, brakes]
+)
 
-### Troubleshooting
-- If you encounter import errors, check your working directory and dependencies.
-- For missing data or feature engineering errors, ensure driver variable names and session selections are correct and consistent.
+# Cluster distribution with anomaly analysis
+plots.plot_cluster_distribution(
+    df_clustered=clustered_data,
+    title="Driving Style Clusters - Anomaly Detection"
+)
+```
+- **Dark theme plots** for professional presentations
+- **Multi-axis telemetry** showing speed, throttle, braking simultaneously
+- **Color-coded by driver** for easy comparison
+- **Cluster distribution charts** highlight anomalies with noise-to-signal analysis
+
+### 🤖 Machine Learning Clustering
+- **HDBSCAN Algorithm**: Identifies driving style patterns
+- **Anomaly Detection**: Flags unusual laps as noise points
+- **Feature Engineering**: Brake timing, throttle ramps, exit speeds
+- **Cluster Distribution Analysis**: Visual breakdown of clusters vs anomalies
+- **Clustering Accuracy**: Assess robustness with noise-to-signal ratios
+
+### 🔧 Configurable Analysis
+```python
+year = 2025
+grand_prix = "Bahrain"
+session_type = "R"  # Race or Qualifying
+critical_turn = [10]  # Corner to analyze
+radius = 2500  # Telemetry capture radius
+```
+
+## 📁 Key Files
+
+- `notebooks/01_multi_driver_gp_analysis.ipynb` - **Main analysis notebook**
+- `src/models/clustering_hdbscan.py` - HDBSCAN clustering
+- `src/viz/plots.py` - Visualization functions
+- `src/preprocessing/telemetry_processing.py` - Data processing
+
+## 🔧 Configuration & Usage
+
+### Basic Configuration
+```python
+year = 2025
+grand_prix = "Bahrain"
+session_type = "R"      # "R" = Race, "Q" = Qualifying
+critical_turn = [10]    # Corner to analyze
+radius = 2500          # Telemetry capture radius
+```
+
+### Clustering Parameters (in `clustering_hdbscan.py`)
+```python
+min_cluster_size = 13  # Minimum points per cluster
+min_samples = 3        # Core point threshold
+```
+
+### Feature Selection
+Enable/disable features by commenting/uncommenting in `clustering_hdbscan.py`:
+```python
+# 'InitialBrakeTime',  # Brake timing analysis
+# 'BrakeDuration',     # Brake duration patterns
+# 'ThrottleRampTime',  # Throttle application
+# 'ExitAccelDuration', # Corner exit acceleration
+```
+
+## 🔧 Troubleshooting
+
+**Import Errors**
+```bash
+# Ensure you're in the project root directory
+cd f1-driving-style-analytics-tool
+python -c "import src.data.f1_data"  # Should not error
+```
+
+**Missing Data**
+- FastF1 API requires internet connection
+- Some sessions may not have complete telemetry data
+- Check session availability on F1 official timing
+
+**Clustering Results**
+- Too many noise points? Reduce `min_cluster_size`
+- Too few clusters? Increase `min_samples`
+- Adjust feature selection for your analysis focus
+
+## 📞 Support
+
+- 📧 Email: [pesmithiii7@gmail.com]
+- 🐛 Issues: [GitHub](https://github.com/PESIII23/f1-driving-style-analytics-tool)
+- 📚 Documentation: [Project Guide](https://docs.google.com/document/d/1BunsD4oBivE5Oaoi5o8yKeI-t56p413B6HScvpEkVn8/edit?usp=sharing)
 
 ---
 
-For questions or contributions, open an issue or pull request on GitHub.
-
-## My Contribution
-- Piloted the senior capstone project **a semester early**.
-- Built a **driver telemetry analytics tool** using Python, Jupyter, and Matplotlib.
-- Implemented **clustering and anomaly detection models** to categorize driving styles and flag outlier laps.
-- Produced **insights on braking, throttle, and tire wear** patterns.
-- Laid foundation for future teams to extend analysis and integrate results into F1 workflows.
-
-## Key Takeaways
-- Delivered a **full pipeline from telemetry to insights**.
-- Showcased **analytics, ML, and visualization** for real-world problems.
-- Early capstone demonstrates **initiative and project ownership**.
-
-## Requirements
-See `requirements.txt` for all dependencies.
-Python 3.13+ recommended.
+**Made with ❤️ for Formula 1 analytics and data science!**

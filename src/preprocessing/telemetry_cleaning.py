@@ -1,38 +1,42 @@
 import pandas as pd
+from src.utils import f1_pandas_helpers
 
-def clean_driver_sector_telemetry(df, driver: str):
+def clean_driver_telemetry(df, driver: str):
     """
-    Cleans and standardizes a telemetry dataframe for a single driver and sector.
+    Clean and standardize a telemetry dataframe for a single driver.
     - Adds a 'DriverCode' column for identification.
-    - Drops unnecessary columns to reduce dataset size.
+    - Drops unnecessary columns (ignored if missing).
     - Renames columns for clarity and consistent units.
-    - Converts speed from km/h to m/s.
-    - Converts 'BrakesApplied' to integer type.
-    Returns the cleaned dataframe.
+    - Converts speed from km/h to m/s (if present).
+    - Converts 'BrakesApplied' to integer type (if present).
+    Returns the cleaned dataframe copy.
     """
+    df = df.copy()
     df.insert(0, 'DriverCode', driver)
 
     df = df.drop([
-        'Date', 'DriverAhead', 'DistanceToDriverAhead', 
+        'Date', 'DriverAhead', 'DistanceToDriverAhead',
         'DRS', 'Source', 'RelativeDistance', 'Status'
-    ], axis=1)
+    ], axis=1, errors='ignore')
 
     df = df.rename(columns={
-        'SessionTime': 'SessionTime (s)', 
-        'Time': 'SectorTime (s)', 
-        'Speed': 'Speed (m/s)', 
-        'Throttle': 'Throttle (%)', 
-        'Brake': 'BrakesApplied', 
-        'Distance': 'Distance (m)', 
-        'X': 'X (1/10 m)', 
-        'Y': 'Y (1/10 m)', 
+        'SessionTime': 'SessionTime (s)',
+        'Time': 'SectorTime (s)',
+        'Speed': 'Speed (m/s)',
+        'Throttle': 'Throttle (%)',
+        'Brake': 'BrakesApplied',
+        'Distance': 'Distance (m)',
+        'X': 'X (1/10 m)',
+        'Y': 'Y (1/10 m)',
         'Z': 'Z (1/10 m)'
     })
 
-    # conversion of km/h to m/s
-    df['Speed (m/s)'] = df['Speed (m/s)'] * 0.277778
+    # conversion of km/h to m/s (handle non-numeric safely)
+    if 'Speed (m/s)' in df.columns:
+        df['Speed (m/s)'] = pd.to_numeric(df['Speed (m/s)'], errors='coerce') * 0.277778
 
-    df['BrakesApplied'] = df['BrakesApplied'].astype(int)
+    if 'BrakesApplied' in df.columns:
+        df['BrakesApplied'] = pd.to_numeric(df['BrakesApplied'], errors='coerce').fillna(0).astype(int)
 
     return df
 
