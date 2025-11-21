@@ -142,8 +142,8 @@ python -c "import src.data.f1_data"  # Should not error
 
 ## LinkedIn Posts
 
-- Intro: (https://www.linkedin.com/posts/pesiii_formula1-cadillacf1-gmmotorsport-activity-7365775054317502464-qmsr?utm_source=share&utm_medium=member_desktop&rcm=ACoAACSrLlEBT6k6Sz6gGOY_RdhZlQvZAS9ZPTs)
-- Mid-semester Update (https://www.linkedin.com/posts/pesiii_formula1-cadillacf1-cadillacracing-activity-7384278707022200832-2lHi?utm_source=share&utm_medium=member_desktop&rcm=ACoAACSrLlEBT6k6Sz6gGOY_RdhZlQvZAS9ZPTs)
+- [Intro](https://www.linkedin.com/posts/pesiii_formula1-cadillacf1-gmmotorsport-activity-7365775054317502464-qmsr?utm_source=share&utm_medium=member_desktop&rcm=ACoAACSrLlEBT6k6Sz6gGOY_RdhZlQvZAS9ZPTs)
+- [Mid-semester Update](https://www.linkedin.com/posts/pesiii_formula1-cadillacf1-cadillacracing-activity-7384278707022200832-2lHi?utm_source=share&utm_medium=member_desktop&rcm=ACoAACSrLlEBT6k6Sz6gGOY_RdhZlQvZAS9ZPTs)
 - Conclusion: Soon!
 
 ## Support
