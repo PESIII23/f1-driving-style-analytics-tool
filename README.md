@@ -140,11 +140,11 @@ python -c "import src.data.f1_data"  # Should not error
 - Too few clusters? Increase `min_samples`
 - Adjust feature selection for your analysis focus
 
-## 📞 Support
+## Support
 
-- 📧 Email: [pesmithiii7@gmail.com]
-- 🐛 Repository: [GitHub](https://github.com/PESIII23/f1-driving-style-analytics-tool)
-- 📚 Documentation: [Project Guide](https://docs.google.com/document/d/1BunsD4oBivE5Oaoi5o8yKeI-t56p413B6HScvpEkVn8/edit?usp=sharing)
+- Email: [pesmithiii7@gmail.com]
+- Repository: [GitHub](https://github.com/PESIII23/f1-driving-style-analytics-tool)
+- Documentation: [Project Guide](https://docs.google.com/document/d/1BunsD4oBivE5Oaoi5o8yKeI-t56p413B6HScvpEkVn8/edit?usp=sharing)
 
 ---
 
