@@ -87,7 +87,7 @@ critical_turn = [10]  # Corner to analyze
 radius = 2500  # Telemetry capture radius
 ```
 
-## 📁 Key Files
+## Key Files
 
 - `notebooks/01_multi_driver_gp_analysis.ipynb` - **Main analysis notebook**
 - `src/models/clustering_hdbscan.py` - HDBSCAN clustering
