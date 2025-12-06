@@ -42,7 +42,7 @@ jupyter notebook
 
 Open `notebooks/01_multi_driver_gp_analysis.ipynb` and run all cells for complete analysis.
 
-## 📊 Main Notebook Features
+## Main Notebook Features
 
 The `01_multi_driver_gp_analysis.ipynb` notebook is the core of this project and provides:
 
@@ -51,7 +51,7 @@ The `01_multi_driver_gp_analysis.ipynb` notebook is the core of this project and
 - **Safety Car Filtering**: Removes distorted laps for clean analysis
 - **Corner-Isolated Analysis**: Focus on critical turns (e.g., Turn 10 at Bahrain)
 
-### 📈 Advanced Visualizations
+### Advanced Visualizations
 ```python
 # Multi-driver telemetry comparison
 plots.plot_multiple_drivers_telemetry(
