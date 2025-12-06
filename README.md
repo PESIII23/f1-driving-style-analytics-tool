@@ -2,11 +2,11 @@
 
 Machine learning tool that clusters F1 drivers by driving style using telemetry data. Analyzes brake timing, throttle patterns, and cornering techniques independent of lap times.
 
-## 🔍 Overview
+## Overview
 
 Isolates driver behavior from car performance by clustering telemetry patterns. Built with Python, FastF1 API, and HDBSCAN clustering to identify distinct driving styles across 20+ F1 drivers.
 
-## 📋 Data Requirements & Driver Selection
+## Data Requirements & Driver Selection
 
 **Important**: Before running analysis, you need to determine which drivers participated in your selected session:
 
@@ -24,14 +24,13 @@ Isolates driver behavior from car performance by clustering telemetry patterns. 
 
 **Note**: The notebook is pre-configured with a full 2025 F1 grid, but you should verify driver participation for your specific session.
 
-## ✨ Key Features
+## Key Features
 
-- **📊 Multi-Driver Analysis**: Process entire F1 grid simultaneously in Jupyter notebook
-- **🤖 ML Clustering**: HDBSCAN identifies driving style patterns and anomalies  
-- **📈 Professional Visualizations**: Dark theme plots optimized for presentations
-- **🔧 Advanced Features**: Brake timing, throttle ramps, G-forces, gear shifts
-
-## 🚀 Quick Start
+- ** Multi-Driver Analysis**: Process entire F1 grid simultaneously in Jupyter notebook
+- ** ML Clustering**: HDBSCAN identifies driving style patterns and anomalies  
+- ** Professional Visualizations**: Dark theme plots optimized for presentations
+- ** Advanced Features**: Brake-centered telemetry, brake timing, throttle ramps, corner exit speeds 
+## Quick Start
 
 ```bash
 git clone https://github.com/PESIII23/f1-driving-style-analytics-tool.git
@@ -47,10 +46,10 @@ Open `notebooks/01_multi_driver_gp_analysis.ipynb` and run all cells for complet
 
 The `01_multi_driver_gp_analysis.ipynb` notebook is the core of this project and provides:
 
-### 🏎️ Driver Processing Pipeline
+### Driver Processing Pipeline
 - **20+ F1 Drivers**: Automated telemetry extraction for entire grid
 - **Safety Car Filtering**: Removes distorted laps for clean analysis
-- **Corner-Specific Analysis**: Focus on critical turns (e.g., Turn 10 at Bahrain)
+- **Corner-Isolated Analysis**: Focus on critical turns (e.g., Turn 10 at Bahrain)
 
 ### 📈 Advanced Visualizations
 ```python
@@ -68,18 +67,18 @@ plots.plot_cluster_distribution(
 )
 ```
 - **Dark theme plots** for professional presentations
-- **Multi-axis telemetry** showing speed, throttle, braking simultaneously
+- **Multi-axis telemetry** showing speed, throttle, braking, and more simultaneously
 - **Color-coded by driver** for easy comparison
 - **Cluster distribution charts** highlight anomalies with noise-to-signal analysis
 
-### 🤖 Machine Learning Clustering
+### Machine Learning Clustering
 - **HDBSCAN Algorithm**: Identifies driving style patterns
 - **Anomaly Detection**: Flags unusual laps as noise points
 - **Feature Engineering**: Brake timing, throttle ramps, exit speeds
 - **Cluster Distribution Analysis**: Visual breakdown of clusters vs anomalies
 - **Clustering Accuracy**: Assess robustness with noise-to-signal ratios
 
-### 🔧 Configurable Analysis
+### Configurable Analysis
 ```python
 year = 2025
 grand_prix = "Bahrain"
@@ -95,7 +94,7 @@ radius = 2500  # Telemetry capture radius
 - `src/viz/plots.py` - Visualization functions
 - `src/preprocessing/telemetry_processing.py` - Data processing
 
-## 🔧 Configuration & Usage
+## Configuration & Usage
 
 ### Basic Configuration
 ```python
@@ -121,7 +120,7 @@ Enable/disable features by commenting/uncommenting in `clustering_hdbscan.py`:
 # 'ExitAccelDuration', # Corner exit acceleration
 ```
 
-## 🔧 Troubleshooting
+## Troubleshooting
 
 **Import Errors**
 ```bash
