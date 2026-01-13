@@ -26,10 +26,10 @@ Isolates driver behavior from car performance by clustering telemetry patterns. 
 
 ## Key Features
 
-- ** Multi-Driver Analysis**: Process entire F1 grid simultaneously in Jupyter notebook
-- ** ML Clustering**: HDBSCAN identifies driving style patterns and anomalies  
-- ** Professional Visualizations**: Dark theme plots optimized for presentations
-- ** Advanced Features**: Brake-centered telemetry, brake timing, throttle ramps, corner exit speeds 
+- **Multi-Driver Analysis**: Process entire F1 grid simultaneously in Jupyter notebook
+- **ML Clustering**: HDBSCAN identifies driving style patterns and anomalies  
+- **Professional Visualizations**: Dark theme plots optimized for presentations
+- **Advanced Features**: Brake-centered telemetry, brake timing, throttle ramps, corner exit speeds 
 ## Quick Start
 
 ```bash
