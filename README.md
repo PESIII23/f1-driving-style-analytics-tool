@@ -144,7 +144,3 @@ python -c "import src.data.f1_data"  # Should not error
 - Email: [pesmithiii7@gmail.com]
 - Documentation: [Project Guide](https://docs.google.com/document/d/1bUCOeN5bhuaDrrDMexeJ81TFGt67gbFEIRQ7dnIu1b4/edit?usp=sharing)
 - Repository: [GitHub](https://github.com/PESIII23/f1-driving-style-analytics-tool)
-
----
-
-**Made with ❤️ for Formula 1 analytics and data science!**
