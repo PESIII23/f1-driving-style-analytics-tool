@@ -112,7 +112,7 @@ min_samples = 3        # Core point threshold
 ```
 
 ### Feature Selection
-Enable/disable features by commenting/uncommenting in `clustering_hdbscan.py`:
+Enable/disable features by uncommenting/commenting in `clustering_hdbscan.py`:
 ```python
 # 'InitialBrakeTime',  # Brake timing analysis
 # 'BrakeDuration',     # Brake duration patterns
