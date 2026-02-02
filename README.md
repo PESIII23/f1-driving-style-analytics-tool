@@ -90,7 +90,7 @@ The tool supports advanced visualizations for comparing driver telemetry:
 2. **Customizable Analysis**: Analyze specific drivers or focus on particular telemetry features/regions.
 
 3. **Professional Outputs**:
-   - **Scatter plots** showing speed, throttle, and brakes across turns.
+   - **Transient-line plots** showing speed, throttle, and brakes across turns.
    - **Cluster distribution graphs**: Highlight driving patterns and anomalies from ML results.
 
 ---
