@@ -168,6 +168,14 @@ python -c "import src.data.f1_data"  # Should not error
 
 ---
 
+## LinkedIn
+
+- [Intro](https://www.linkedin.com/posts/pesiii_formula1-cadillacf1-gmmotorsport-activity-7365775054317502464-qmsr?utm_source=share&utm_medium=member_desktop&rcm=ACoAACSrLlEBT6k6Sz6gGOY_RdhZlQvZAS9ZPTs)
+- [Mid-Semester](https://www.linkedin.com/posts/pesiii_formula1-cadillacf1-cadillacracing-activity-7384278707022200832-2lHi?utm_source=share&utm_medium=member_desktop&rcm=ACoAACSrLlEBT6k6Sz6gGOY_RdhZlQvZAS9ZPTs)
+- [Final](https://www.linkedin.com/posts/pesiii_gmmotorsport-iworkforgm-cadillacf1-activity-7398377487971446784-paMd?utm_source=share&utm_medium=member_desktop&rcm=ACoAACSrLlEBT6k6Sz6gGOY_RdhZlQvZAS9ZPTs)
+
+---
+
 ## Support
 
 If you run into any issues or have questions:
