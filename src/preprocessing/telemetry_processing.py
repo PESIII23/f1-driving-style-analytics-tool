@@ -174,5 +174,6 @@ def get_fastest_lap_telemetry(processed_driver_data, driver_code, corner_positio
     
     else:
         # add fastest lap number to the fastest lap telemetry df
+        sector_telemetry = sector_telemetry.copy()
         sector_telemetry['LapNumber'] = fastest_lap_number
         return sector_telemetry
