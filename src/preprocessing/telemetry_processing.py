@@ -16,6 +16,8 @@ def process_driver_telemetry(session, driver, safety_car_laps, corner_position_c
 
     Returns:
         final_feature_df: pd.DataFrame containing combined EDA stats and performance metrics
+        driver_laps_filtered:
+        sector_timestamps_dict: dictionary of lap numbers and their sector timestamps
     """
     # pick laps for driver
     driver_laps = session.laps.pick_drivers(driver)
@@ -50,50 +52,57 @@ def process_driver_telemetry(session, driver, safety_car_laps, corner_position_c
             sector_telemetry_list.append(sector_telemetry)
 
     # filter sector telemetry points that fall within the corner radius
-    corner_telemetry_list = [
-        telemetry_cleaning.filter_corner_telemetry(
-            sector_df,
-            corner_position_cleaned,
-            critical_turn,
-            radius
-        )
-        for sector_df in sector_telemetry_list
-    ]
+    if (critical_turn != None) and radius > 0:
+        corner_telemetry_list = [
+            telemetry_cleaning.filter_corner_telemetry(
+                sector_df,
+                corner_position_cleaned,
+                critical_turn,
+                radius
+            )
+            for sector_df in sector_telemetry_list
+        ]
 
-    # derive features for each corner-isolated dataframe
-    corner_telemetry_enriched_list = [
-        feature_engineering.TelemetryFeatures(corner_df)
-        .acceleration()
-        .g_force()
-        .convert_sector_time_to_seconds()
-        .get_features_df()
-        for corner_df in corner_telemetry_list
-    ]
+        # derive features for each corner-isolated dataframe
+        corner_telemetry_enriched_list = [
+            feature_engineering.TelemetryFeatures(corner_df)
+            .acceleration()
+            .g_force()
+            .convert_sector_time_to_seconds()
+            .get_features_df()
+            for corner_df in corner_telemetry_list
+        ]
 
-    # generate performance metrics
-    performance_metrics_list = [
-        feature_engineering.TelemetryFeatures.generate_telemetry_performance_metrics(corner_df)
-        for corner_df in corner_telemetry_enriched_list
-    ]
-    performance_metrics_df = pd.DataFrame(performance_metrics_list)
+        # generate performance metrics
+        performance_metrics_list = [
+            feature_engineering.TelemetryFeatures.generate_telemetry_performance_metrics(corner_df)
+            for corner_df in corner_telemetry_enriched_list
+        ]
+        
+        performance_metrics_df = pd.DataFrame(performance_metrics_list)
 
-    # calculate EDA stats
-    eda_summary_list = [
-        f1_pandas_helpers.get_driver_eda_stats(
-            df=corner_df,
-            driver=driver,
-            critical_turn=critical_turn
-        )
-        for corner_df in corner_telemetry_enriched_list
-    ]
-    eda_summary_df = pd.concat(eda_summary_list, ignore_index=True)
+        # calculate EDA stats
+        eda_summary_list = [
+            f1_pandas_helpers.get_driver_eda_stats(
+                df=corner_df,
+                driver=driver,
+                critical_turn=critical_turn
+            )
+            for corner_df in corner_telemetry_enriched_list
+        ]
+        eda_summary_df = pd.concat(eda_summary_list, ignore_index=True)
 
-    # combine EDA stats with performance metrics
-    final_feature_df = pd.concat([eda_summary_df, performance_metrics_df.reset_index(drop=True)], axis=1)
+        # combine EDA stats with performance metrics
+        final_feature_df = pd.concat([eda_summary_df, performance_metrics_df.reset_index(drop=True)], axis=1)
 
-    return final_feature_df, driver_laps_filtered, sector_timestamps_dict
+        return final_feature_df, driver_laps_filtered, sector_timestamps_dict
+    
+    else:
+        return sector_telemetry_list, driver_laps, driver_laps_filtered, sector_timestamps_dict
 
-def get_fastest_lap_corner_telemetry(processed_driver_data, driver_code, corner_position, critical_turn, radius, start, end):
+
+
+def get_fastest_lap_telemetry(processed_driver_data, driver_code, corner_position, critical_turn, radius, start, end):
     """
     Extracts corner-isolated telemetry for the fastest lap of a driver.
     
@@ -114,11 +123,14 @@ def get_fastest_lap_corner_telemetry(processed_driver_data, driver_code, corner_
             Key name for sector2 end / sector3 start timestamp in sector dict
 
     Returns:
-        corner_telemetry_enriched: pd.DataFrame
-            Telemetry dataframe filtered to the corner for the fastest lap, with derived features
+        corner_telemetry_enriched: if critical_turn required get Telemetry df filtered to the corner for the fastest lap
+        sector_telemetry: if critical_turn not required, get Telemetry df for the fastest lap
     """
     # unpack processed data
-    _, driver_laps_filtered, sector_timestamps_dict = processed_driver_data
+    if (critical_turn != None) and radius > 0:
+        _, driver_laps_filtered, sector_timestamps_dict = processed_driver_data
+    else:
+        _, _, driver_laps_filtered, sector_timestamps_dict = processed_driver_data
 
     # get fastest lap row
     fastest_lap_idx = driver_laps_filtered.loc[driver_laps_filtered['LapTime'].idxmin()]
@@ -140,21 +152,27 @@ def get_fastest_lap_corner_telemetry(processed_driver_data, driver_code, corner_
         timestamp_col='SessionTime (s)'
     )
 
-    # filter telemetry points within corner radius
-    corner_telemetry = telemetry_cleaning.filter_corner_telemetry(
-        sector_telemetry,
-        corner_position,
-        critical_turn,
-        radius
-    )
+    if (critical_turn != None) and (radius > 0):
+        # filter telemetry points within corner radius
+        corner_telemetry = telemetry_cleaning.filter_corner_telemetry(
+            sector_telemetry,
+            corner_position,
+            critical_turn,
+            radius
+        )
 
-    # derive features
-    corner_telemetry_enriched = (
-        feature_engineering.TelemetryFeatures(corner_telemetry)
-        .acceleration()
-        .g_force()
-        .convert_sector_time_to_seconds()
-        .get_features_df()
-    )
+        # derive features
+        corner_telemetry_enriched = (
+            feature_engineering.TelemetryFeatures(corner_telemetry)
+            .acceleration()
+            .g_force()
+            .convert_sector_time_to_seconds()
+            .get_features_df()
+        )
 
-    return corner_telemetry_enriched
+        return corner_telemetry_enriched
+    
+    else:
+        # add fastest lap number to the fastest lap telemetry df
+        sector_telemetry['LapNumber'] = fastest_lap_number
+        return sector_telemetry
