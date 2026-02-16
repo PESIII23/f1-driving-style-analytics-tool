@@ -1,6 +1,9 @@
 import matplotlib.pyplot as plt
 import pandas as pd
 
+def plot_two_driver_telemetry_delta(dfs):
+    return None
+
 def plot_multiple_drivers_telemetry(dfs, drivers=[], time_col='SectorTime (s)', telemetry_cols=[]):
     """
     Dynamically generates a multi-axis plot for multiple drivers' telemetry columns over a shared time axis.

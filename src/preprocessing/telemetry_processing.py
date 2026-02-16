@@ -98,7 +98,7 @@ def process_driver_telemetry(session, driver, safety_car_laps, corner_position_c
         return final_feature_df, driver_laps_filtered, sector_timestamps_dict
     
     else:
-        return sector_telemetry_list, driver_laps, driver_laps_filtered, sector_timestamps_dict
+        return sector_telemetry_list, driver_laps_filtered, sector_timestamps_dict
 
 
 
@@ -130,7 +130,7 @@ def get_fastest_lap_telemetry(processed_driver_data, driver_code, corner_positio
     if (critical_turn != None) and radius > 0:
         _, driver_laps_filtered, sector_timestamps_dict = processed_driver_data
     else:
-        _, _, driver_laps_filtered, sector_timestamps_dict = processed_driver_data
+        _, driver_laps_filtered, sector_timestamps_dict = processed_driver_data
 
     # get fastest lap row
     fastest_lap_idx = driver_laps_filtered.loc[driver_laps_filtered['LapTime'].idxmin()]
