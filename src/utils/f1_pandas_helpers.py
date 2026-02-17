@@ -1,5 +1,6 @@
 import pandas as pd
 import src.preprocessing.telemetry_cleaning as telemetry_cleaning
+import numpy as np
 
 def filter_driver_lap_data(df, safety_car_laps=[]):
     """
