@@ -22,7 +22,7 @@ def clean_driver_telemetry(df, driver: str):
     df = df.rename(columns={
         'SessionTime': 'SessionTime (s)',
         'Time': 'SectorTime (s)',
-        'Speed': 'Speed (km/h)',
+        'Speed': 'Speed (m/s)',
         'Throttle': 'Throttle (%)',
         'Brake': 'BrakesApplied',
         'Distance': 'Distance (m)',
@@ -32,8 +32,8 @@ def clean_driver_telemetry(df, driver: str):
     })
 
     # conversion of km/h to m/s (handle non-numeric safely)
-    # if 'Speed (m/s)' in df.columns:
-    #     df['Speed (m/s)'] = pd.to_numeric(df['Speed (m/s)'], errors='coerce') * 0.277778
+    if 'Speed (m/s)' in df.columns:
+        df['Speed (m/s)'] = pd.to_numeric(df['Speed (m/s)'], errors='coerce') * 0.277778
 
     if 'BrakesApplied' in df.columns:
         df['BrakesApplied'] = pd.to_numeric(df['BrakesApplied'], errors='coerce').fillna(0).astype(int)
