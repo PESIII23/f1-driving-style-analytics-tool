@@ -70,6 +70,7 @@ class F1Constants:
 
     TELEMETRY_COLUMNS = {
         'Speed (m/s)': 'Speed (m/s)',
+        'Speed (km/h)': 'Speed (km/h)',
         'Acceleration (m/s²)': 'Acceleration (m/s²)',
         'Jerk (m/s³)': 'Jerk (m/s³)',
         'G-force (g)': 'G-force (g)',

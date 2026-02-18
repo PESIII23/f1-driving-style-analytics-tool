@@ -9,8 +9,8 @@ from sklearn.decomposition import PCA
 
 pkl_path = 'notebooks/exports/final_features/2025_bahrain_sector2_grandprix.pkl'
 df = pd.read_pickle(pkl_path)
-min_cluster_size = 13
-min_samples = 3
+min_cluster_size = 9
+min_samples = 1
 
 def perform_hdbscan_clustering(df, min_cluster_size, min_samples):
     """
@@ -24,6 +24,7 @@ def perform_hdbscan_clustering(df, min_cluster_size, min_samples):
         'Driver',
         'Turn',
         'RowCount',
+        'SpeedMin',
         'MaxSpeed',
         'MeanSpeed',
         'MedianSpeed',
@@ -39,15 +40,14 @@ def perform_hdbscan_clustering(df, min_cluster_size, min_samples):
         'GearShifts',
         'ThrottleEvents',
         'MeanThrottle',
+        'ThrottleRampTime',
         'SDThrottle',
         'BrakeEvents',
-        'InitialBrakeTime',
-        'BrakeDuration',
-        # 'ThrottleRampTime',
-        'SpeedMin',
-        'ExitSpeed',
-        # 'ExitAccelDuration',
-        'TurnDuration'
+        # 'InitialBrakeTime',
+        # 'BrakeDuration',
+        'ExitAccelDuration',
+        'TurnDuration',
+        'ExitSpeed'
     ])
 
     X = X.fillna(0) # Handle missing values
