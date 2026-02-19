@@ -19,6 +19,9 @@ def clean_driver_telemetry(df, driver: str):
         'DRS', 'Source', 'RelativeDistance', 'Status'
     ], axis=1, errors='ignore')
 
+    # duplicate speed column to use km/h for notebook 02
+    df['Speed (km/h)'] = df['Speed']
+
     df = df.rename(columns={
         'SessionTime': 'SessionTime (s)',
         'Time': 'SectorTime (s)',
